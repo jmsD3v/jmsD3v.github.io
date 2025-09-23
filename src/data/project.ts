@@ -54,4 +54,14 @@ export const Project: ProjectType[] = [
         deploy: 'https://adoptme-production-22e6.up.railway.app/',
         github: 'https://github.com/jmSilva83/AdoptMe.git',
     },
+    {
+        id: 5,
+        name: 'Landing Page HEXA Servicios Integrales SAS',
+        image: '/HexaLanding.png',
+        type: 'web',
+        project_technologies: ['Next.js', 'Tailwind CSS', 'React', 'Node.js'],
+        description: 'Sitio institucional para empresa de ingeniería y proyectos. Maquetación modular, optimización de carga y presentación profesional de servicios técnicos.',
+        deploy: 'https://hexaservicios.com/',
+        github: null,
+    },
 ];
