@@ -37,7 +37,11 @@ export default function MainSection() {
                 data-aos='fade-up'
                 data-aos-delay='200'
               >
-                Full Stack Developer
+                <span className='block'>
+                  Full Stack JS/TS & Python Developer
+                </span>
+                <span className='block'>AI Engineer</span>
+                <span className='block'>Cybersecurity Specialist</span>
               </h2>
             </div>
             <Social />
