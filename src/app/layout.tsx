@@ -3,8 +3,8 @@ import { Geist, Geist_Mono, Montserrat } from 'next/font/google';
 import './globals.css';
 
 const geistSans = Geist({
-    variable: '--font-geist-sans',
-    subsets: ['latin'],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
 
 // const geistMono = Geist_Mono({
@@ -12,28 +12,28 @@ const geistSans = Geist({
 //   subsets: ["latin"],
 // });
 const font = Montserrat({
-    weight: ['600'],
-    subsets: ['latin'],
+  weight: ['600'],
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-    title: 'Portfolio Juan Manuel Silva',
-    description: 'Portfolio Juan Manuel Silva - Full Stack Developer',
+  title: 'Portfolio Juan Manuel Silva',
+  description: 'Portfolio Juan Manuel Silva - Full Stack Developer',
 };
 
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    return (
-        <html lang='en'>
-            <body
-                className={`${font.className} antialiased`}
-                style={{ fontFamily: 'var(--font-montserrat)' }}
-            >
-                {children}
-            </body>
-        </html>
-    );
+  return (
+    <html lang='en' className='hydrated'>
+      <body
+        className={`${font.className} antialiased`}
+        style={{ fontFamily: 'var(--font-montserrat)' }}
+      >
+        {children}
+      </body>
+    </html>
+  );
 }
