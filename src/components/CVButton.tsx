@@ -1,14 +1,14 @@
 'use client';
-import Link from 'next/link';
 
 export default function CVButton({ className = '' }) {
   return (
-    <Link
-      href='resume.pdf'
+    <a
+      href='/resume.pdf'
       target='_blank'
+      rel='noopener noreferrer'
       download='resume.pdf'
       aria-label='Download CV'
-      className={`group inline-flex items-center justify-center h-9 px-3 rounded-sm text-neutral-200 text-sm font-medium hover:bg-purple-700 duration-200 ${className}`}
+      className={`group hidden md:inline-flex items-center justify-center h-9 px-3 rounded-sm text-neutral-200 text-sm font-medium hover:bg-purple-700 duration-200 ${className}`}
     >
       <span className='inline-flex items-center pt-2 gap-2'>
         <span>Get my CV</span>
@@ -28,6 +28,6 @@ export default function CVButton({ className = '' }) {
           />
         </svg>
       </span>
-    </Link>
+    </a>
   );
 }
