@@ -110,14 +110,58 @@
 
 ## Traceability
 
-| Phase | Requirements Covered |
-|-------|---------------------|
-| Phase 1: Foundation | FOUND-01 → FOUND-10 |
-| Phase 2: Hero Section | HERO-01 → HERO-06 |
-| Phase 3: Profile Sections + Transition | DEV-01 → DEV-05, HACK-01 → HACK-06, TRANS-01 → TRANS-05 |
-| Phase 4: GitHub Projects | PROJ-01 → PROJ-06 |
-| Phase 5: Contact + Polish + QA | CONTACT-01 → CONTACT-04, PERF-01 → PERF-05 |
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| FOUND-01 | Phase 1: Foundation | Pending |
+| FOUND-02 | Phase 1: Foundation | Pending |
+| FOUND-03 | Phase 1: Foundation | Pending |
+| FOUND-04 | Phase 1: Foundation | Pending |
+| FOUND-05 | Phase 1: Foundation | Pending |
+| FOUND-06 | Phase 1: Foundation | Pending |
+| FOUND-07 | Phase 1: Foundation | Pending |
+| FOUND-08 | Phase 1: Foundation | Pending |
+| FOUND-09 | Phase 1: Foundation | Pending |
+| FOUND-10 | Phase 1: Foundation | Pending |
+| HERO-01 | Phase 2: Hero Section | Pending |
+| HERO-02 | Phase 2: Hero Section | Pending |
+| HERO-03 | Phase 2: Hero Section | Pending |
+| HERO-04 | Phase 2: Hero Section | Pending |
+| HERO-05 | Phase 2: Hero Section | Pending |
+| HERO-06 | Phase 2: Hero Section | Pending |
+| DEV-01 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| DEV-02 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| DEV-03 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| DEV-04 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| DEV-05 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| HACK-01 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| HACK-02 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| HACK-03 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| HACK-04 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| HACK-05 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| HACK-06 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| TRANS-01 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| TRANS-02 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| TRANS-03 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| TRANS-04 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| TRANS-05 | Phase 3: Profile Sections + Scroll Transition | Pending |
+| PROJ-01 | Phase 4: GitHub Projects Section | Pending |
+| PROJ-02 | Phase 4: GitHub Projects Section | Pending |
+| PROJ-03 | Phase 4: GitHub Projects Section | Pending |
+| PROJ-04 | Phase 4: GitHub Projects Section | Pending |
+| PROJ-05 | Phase 4: GitHub Projects Section | Pending |
+| PROJ-06 | Phase 4: GitHub Projects Section | Pending |
+| CONTACT-01 | Phase 5: Contact + Polish + QA | Pending |
+| CONTACT-02 | Phase 5: Contact + Polish + QA | Pending |
+| CONTACT-03 | Phase 5: Contact + Polish + QA | Pending |
+| CONTACT-04 | Phase 5: Contact + Polish + QA | Pending |
+| PERF-01 | Phase 5: Contact + Polish + QA | Pending |
+| PERF-02 | Phase 5: Contact + Polish + QA | Pending |
+| PERF-03 | Phase 5: Contact + Polish + QA | Pending |
+| PERF-04 | Phase 5: Contact + Polish + QA | Pending |
+| PERF-05 | Phase 5: Contact + Polish + QA | Pending |
+
+**Total mapped:** 47/47 — 100% coverage
 
 ---
 
-*Last updated: 2026-05-04 — initial requirements*
+*Last updated: 2026-05-04 — roadmap created, traceability expanded to per-requirement rows*
