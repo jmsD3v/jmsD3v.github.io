@@ -1,7 +1,7 @@
 # STATE — jms-folio
 
-**Last updated:** 2026-05-04
-**Session:** Initial roadmap creation
+**Last updated:** 2026-05-05
+**Session:** Phase 1 Plan 01 — Project Scaffold (completed)
 
 ---
 
@@ -17,20 +17,20 @@
 
 ## Current Position
 
-**Current phase:** 0 (pre-implementation — roadmap created, no code written)
-**Current plan:** None
-**Status:** Ready to begin Phase 1
+**Current phase:** 1 (Foundation — in progress)
+**Current plan:** 01 complete, moving to Plan 02
+**Status:** Phase 1 Plan 01 complete
 
 **Progress bar:**
 ```
-Phase 1 [          ] 0%
+Phase 1 [###       ] 33%
 Phase 2 [          ] 0%
 Phase 3 [          ] 0%
 Phase 4 [          ] 0%
 Phase 5 [          ] 0%
 ```
 
-**Overall:** 0/5 phases complete
+**Overall:** 0/5 phases complete (Phase 1 in progress: 1/3 plans done)
 
 ---
 
@@ -38,7 +38,7 @@ Phase 5 [          ] 0%
 
 | Phase | Status | Plans Done | Started | Completed |
 |-------|--------|------------|---------|-----------|
-| 1. Foundation | Not started | 0/0 | - | - |
+| 1. Foundation | In progress | 1/3 | 2026-05-05 | - |
 | 2. Hero Section | Not started | 0/0 | - | - |
 | 3. Profile Sections + Scroll Transition | Not started | 0/0 | - | - |
 | 4. GitHub Projects Section | Not started | 0/0 | - | - |
@@ -55,6 +55,10 @@ Phase 5 [          ] 0%
 | Glitch flash rate | <= 3/sec | - |
 | Mobile scroll FPS | ~60fps | - |
 
+| Plan | Phase | Duration | Tasks | Files |
+|------|-------|----------|-------|-------|
+| 01-scaffold | 01-foundation | 29 min | 3/3 | 16 created |
+
 ---
 
 ## Accumulated Context
@@ -70,23 +74,41 @@ Phase 5 [          ] 0%
 - **tsParticles loading:** Dynamic import with `next/dynamic` and `ssr: false`. Particle count reduced to ≤30 on mobile viewport.
 - **GitHub data:** Fetched server-side in a Server Component, passed as serializable props to Client Components. `GitHubRepo` interface has no Date instances or class objects.
 - **ISR strategy:** GitHub repos revalidate every 3600 seconds with `next: { revalidate: 3600, tags: ['github-repos'] }`.
+- **create-next-app workaround:** When project dir has existing files, scaffold in temp dir and copy. Expected behavior on Windows.
 
-### Key File Locations (to be created in Phase 1)
+### Key File Locations
 
-- `lib/github.ts` — server-only GitHub API fetch
-- `components/animations/variants.ts` — all Framer Motion named variants
-- `providers/SmoothScrollProvider.tsx` — Lenis wrapper
-- `providers/AnimationProvider.tsx` — LazyMotion + useReducedMotion
-- `app/globals.css` — `@theme` block, glitch `@keyframes`
-- `.env.local` / `.env.example` — GITHUB_TOKEN, GITHUB_USERNAME
+- `package.json` — all dependencies at pinned exact versions
+- `tsconfig.json` — TypeScript strict mode, @/* alias
+- `postcss.config.mjs` — Tailwind v4 PostCSS adapter
+- `next.config.ts` — reactStrictMode: true
+- `.gitignore` — protects .env.local and build artifacts
+- `.env.example` — documents GITHUB_TOKEN and GITHUB_USERNAME
+- `.env.local` — gitignored, contains jmsD3v username, placeholder token
+- `src/app/layout.tsx` — root layout (to be updated in Plan 02)
+- `src/app/page.tsx` — root page (to be updated in later plans)
+- `lib/github.ts` — (to be created in Plan 03)
+- `components/animations/variants.ts` — (to be created in Plan 02/03)
+- `providers/SmoothScrollProvider.tsx` — (to be created in Plan 03)
+- `providers/AnimationProvider.tsx` — (to be created in Plan 03)
+- `app/globals.css` — (to be updated in Plan 02 with @theme and glitch @keyframes)
 
 ### Open Questions / Todos
 
-- None at roadmap stage — requirements are finalized
+- None
 
 ### Blockers
 
 - None
+
+---
+
+## Decisions Made
+
+1. Used temp directory workaround for create-next-app (can't scaffold into dir with existing files)
+2. postcss.config.mjs uses object format `{ "@tailwindcss/postcss": {} }` — v4 syntax, no tailwind.config file
+3. Package versions pinned exact (no caret) for animation libraries to prevent silent breaking upgrades
+4. GITHUB_USERNAME set to jmsD3v in .env.local
 
 ---
 
@@ -95,10 +117,12 @@ Phase 5 [          ] 0%
 **To resume work:**
 1. Read this STATE.md for current position
 2. Read `.planning/ROADMAP.md` for phase details and success criteria
-3. Run `/gsd-plan-phase {N}` where N is the next phase number
+3. Execute Plan 02: `01-PLAN-design-tokens.md` (or similar)
 
-**Next action:** `/gsd-plan-phase 1` — plan Phase 1 (Foundation)
+**Next action:** Execute Phase 1 Plan 02 (design tokens / CSS theme)
+
+**Stopped at:** Completed Phase 1 Plan 01 (01-scaffold)
 
 ---
 
-*Initialized: 2026-05-04 — roadmap created, 5 phases, 47 requirements*
+*Last updated: 2026-05-05 — Plan 01 complete*

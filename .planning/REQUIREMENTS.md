@@ -10,7 +10,7 @@
 
 ### Foundation (FOUND)
 
-- [ ] **FOUND-01**: App runs locally with Next.js 15 App Router + TypeScript + Tailwind v4
+- [x] **FOUND-01**: App runs locally with Next.js 15 App Router + TypeScript + Tailwind v4
 - [ ] **FOUND-02**: Lenis SmoothScrollProvider wraps the app and syncs with GSAP ticker (`gsap.ticker.lagSmoothing(0)`)
 - [ ] **FOUND-03**: LazyMotion AnimationProvider wraps the app with `domAnimation` features + `useReducedMotion` detection
 - [ ] **FOUND-04**: `lib/github.ts` fetches GitHub repos server-side with `import 'server-only'` guard and `next: { revalidate: 3600, tags: ['github-repos'] }`
@@ -18,8 +18,8 @@
 - [ ] **FOUND-06**: Centralized animation variants in `components/animations/variants.ts` (fadeInFromLeft, fadeInFromRight, fadeInFromTop, fadeInFromBottom, staggerContainer, glitchReveal)
 - [ ] **FOUND-07**: Global CSS `@theme` block defines dark palette (bg black, terminal green accent, off-white text) + glitch `@keyframes`
 - [ ] **FOUND-08**: `prefers-reduced-motion` gating via `gsap.matchMedia()` established in foundation — all GSAP animations have a reduced-motion variant
-- [ ] **FOUND-09**: `.env.local` with `GITHUB_TOKEN` and `GITHUB_USERNAME` documented in `.env.example`
-- [ ] **FOUND-10**: Git repo with proper `.gitignore` (`.env.local`, `node_modules`, `.next`)
+- [x] **FOUND-09**: `.env.local` with `GITHUB_TOKEN` and `GITHUB_USERNAME` documented in `.env.example`
+- [x] **FOUND-10**: Git repo with proper `.gitignore` (`.env.local`, `node_modules`, `.next`)
 
 ### Hero Section (HERO)
 
@@ -112,7 +112,7 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1: Foundation | Pending |
+| FOUND-01 | Phase 1: Foundation | Complete (Plan 01) |
 | FOUND-02 | Phase 1: Foundation | Pending |
 | FOUND-03 | Phase 1: Foundation | Pending |
 | FOUND-04 | Phase 1: Foundation | Pending |
@@ -120,8 +120,8 @@
 | FOUND-06 | Phase 1: Foundation | Pending |
 | FOUND-07 | Phase 1: Foundation | Pending |
 | FOUND-08 | Phase 1: Foundation | Pending |
-| FOUND-09 | Phase 1: Foundation | Pending |
-| FOUND-10 | Phase 1: Foundation | Pending |
+| FOUND-09 | Phase 1: Foundation | Complete (Plan 01) |
+| FOUND-10 | Phase 1: Foundation | Complete (Plan 01) |
 | HERO-01 | Phase 2: Hero Section | Pending |
 | HERO-02 | Phase 2: Hero Section | Pending |
 | HERO-03 | Phase 2: Hero Section | Pending |

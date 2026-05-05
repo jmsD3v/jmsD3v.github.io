@@ -41,7 +41,7 @@
   - Establish `gsap.matchMedia()` utility wrapper that gates all GSAP animations — define reduced-motion fallback (opacity only, no movement)
   - Set up `.env.local` + `.env.example`, `.gitignore`, and initialize Git repo
 
-**Plans**: TBD
+**Plans**: 3 plans — 01-scaffold (DONE), 02-design-tokens, 03-animation-infra
 
 ---
 
@@ -158,7 +158,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/0 | Not started | - |
+| 1. Foundation | 1/3 | In progress | - |
 | 2. Hero Section | 0/0 | Not started | - |
 | 3. Profile Sections + Scroll Transition | 0/0 | Not started | - |
 | 4. GitHub Projects Section | 0/0 | Not started | - |
