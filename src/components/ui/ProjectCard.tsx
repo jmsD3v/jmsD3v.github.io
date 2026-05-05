@@ -1,0 +1,70 @@
+import { cn } from '@/lib/utils'
+import type { ProjectCardData } from '@/types/projects'
+
+const LANG_COLORS: Record<string, string> = {
+  TypeScript: '#3178c6',
+  JavaScript: '#f7df1e',
+  Python: '#3572A5',
+  HTML: '#e34c26',
+  CSS: '#563d7c',
+  Go: '#00ADD8',
+  Rust: '#dea584',
+}
+
+interface ProjectCardProps {
+  project: ProjectCardData
+  selected?: boolean
+  onClick?: () => void
+  className?: string
+}
+
+export function ProjectCard({ project, selected, onClick, className }: ProjectCardProps) {
+  const langColor = project.language ? (LANG_COLORS[project.language] ?? '#64748b') : '#64748b'
+
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        'group w-full text-left flex flex-col gap-3 rounded-xl border bg-surface/40 p-5 transition-colors duration-200',
+        selected
+          ? 'border-accent bg-surface/70'
+          : 'border-surface hover:border-accent/50 hover:bg-surface/70',
+        className,
+      )}
+    >
+      <div className="flex items-start justify-between gap-2">
+        <h3 className={cn(
+          'font-mono text-sm font-semibold transition-colors truncate',
+          selected ? 'text-accent' : 'text-text group-hover:text-accent',
+        )}>
+          {project.name}
+        </h3>
+        {project.stargazers_count > 0 && (
+          <span className="shrink-0 font-mono text-xs text-text-muted">
+            ★ {project.stargazers_count}
+          </span>
+        )}
+      </div>
+
+      {project.description && (
+        <p className="font-mono text-xs text-text-muted line-clamp-2 leading-relaxed">
+          {project.description}
+        </p>
+      )}
+
+      <div className="mt-auto flex items-center gap-3">
+        {project.language && (
+          <span className="flex items-center gap-1.5 font-mono text-xs text-text-muted">
+            <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: langColor }} />
+            {project.language}
+          </span>
+        )}
+        {project.topics.slice(0, 2).map((t) => (
+          <span key={t} className="font-mono text-xs text-text-muted/60 border border-surface rounded px-1.5 py-0.5">
+            {t}
+          </span>
+        ))}
+      </div>
+    </button>
+  )
+}

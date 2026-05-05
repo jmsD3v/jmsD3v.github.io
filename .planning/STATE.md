@@ -1,128 +1,108 @@
 # STATE — jms-folio
 
 **Last updated:** 2026-05-05
-**Session:** Phase 1 Plan 01 — Project Scaffold (completed)
-
----
-
-## Project Reference
-
-**Core value:** Portfolio multi-perfil (Dev + Hacker) con animaciones de scroll de alta calidad y proyectos auto-actualizados desde GitHub API.
-
-**Stack:** Next.js 15 App Router + TypeScript + Tailwind v4 + Framer Motion + GSAP/ScrollTrigger + Lenis
-
-**Aesthetic:** Dark hacker + dev — negro/verde terminal, glitch effects, cyber vibes
+**Session:** Phases 1–5 complete — pendiente: About Me + datos reales (WhatsApp, CV, cert images)
 
 ---
 
 ## Current Position
 
-**Current phase:** 1 (Foundation — in progress)
-**Current plan:** 01 complete, moving to Plan 02
-**Status:** Phase 1 Plan 01 complete
+**Next action:** About Me section + datos reales (WhatsApp, CV path, cert images)
 
 **Progress bar:**
 ```
-Phase 1 [###       ] 33%
-Phase 2 [          ] 0%
-Phase 3 [          ] 0%
-Phase 4 [          ] 0%
-Phase 5 [          ] 0%
+Phase 1 [##########] 100% ✓
+Phase 2 [##########] 100% ✓
+Phase 3 [##########] 100% ✓
+Phase 4 [##########] 100% ✓
+Phase 5 [##########] 100% ✓
 ```
 
-**Overall:** 0/5 phases complete (Phase 1 in progress: 1/3 plans done)
+---
+
+## What's Built
+
+### Estructura de archivos
+```
+src/
+  app/
+    layout.tsx          ✓ SmoothScrollProvider + AnimationProvider + metadata
+    page.tsx            ✓ HeroSection + ProjectProvider + DevSection + ProjectsSection + footer
+    globals.css         ✓ @theme tokens, glitch keyframes, accordion anim, .dud, scrollbar
+  lib/
+    github.ts           ✓ server-only, /user/repos (públicos+privados), categorizeRepo inteligente
+    utils.ts            ✓ cn()
+  types/
+    hero.ts             ✓ Character
+    github.ts           ✓ GitHubRepo
+    showcase.ts         ✓ FeatureShowcaseProps, TabMedia, ShowcaseStep
+    projects.ts         ✓ ProjectCardData, ProjectFilter
+  contexts/
+    ProjectContext.tsx  ✓ selectedProject state compartido DevSection ↔ ProjectsSection
+  components/
+    animations/
+      variants.ts       ✓ fadeInFrom*, staggerContainer, glitchReveal
+    providers/
+      SmoothScrollProvider.tsx  ✓ Lenis + GSAP ticker
+      AnimationProvider.tsx     ✓ LazyMotion + domAnimation
+    sections/
+      HeroSection.tsx           ✓ RainingLetters + TextScramble cycling phrases
+      DevSection.tsx            ✓ TerminalText header + DevShowcase
+      DevShowcase.tsx           ✓ FeatureShowcase reactivo al proyecto seleccionado
+      ProjectsSection.tsx       ✓ Server Component, fetch GitHub, blacklist, exclusiones
+      ProjectsClient.tsx        ✓ Filtros All/Dev/Hacker + cards + scroll-to-dev on select
+      ModeTransition.tsx        ✓ GSAP pinned DEVELOPER→HACKER morph, mobile no-pin, reduced-motion crossfade
+      HackerSection.tsx         ✓ Pentest phases, certs, tool arsenal, HTB/THM links, mailto CTA
+    ui/
+      ProjectCard.tsx           ✓ button, selected state, lang color, topics
+      TerminalText.tsx          ✓ typewriter + cursor parpadeante permanente
+      badge.tsx / button.tsx / card.tsx / tabs.tsx / accordion.tsx  ✓
+    feature-showcase.tsx        ✓ layout 12-col, accordion steps, tabs image, object-contain
+  JUANMA.md                     ✓ (era loQueMeGusta.md)
+```
+
+### GitHub repos configurados
+- 12 repos privados → topics seteados via API
+- HEXA-LandingPage homepage: hexaservicios.com
+- TecnoInstalador homepage: tecnoinstalador.net
+- EXCLUDED: escrutinio-app, E-commerce-Backend-l, 1raPreEntregaBackend2, VendingMachine.-JS, HEXA-landing-Page, 1raPreentregaBackend3, hexa-solarflow, AdoptMe, Landing-Diversos-JS-PF, jmsD3v, jmsD3v.github.io, curso_node-RED, tron-ares-theme
 
 ---
 
-## Phase Status
+## Pending
 
-| Phase | Status | Plans Done | Started | Completed |
-|-------|--------|------------|---------|-----------|
-| 1. Foundation | In progress | 1/3 | 2026-05-05 | - |
-| 2. Hero Section | Not started | 0/0 | - | - |
-| 3. Profile Sections + Scroll Transition | Not started | 0/0 | - | - |
-| 4. GitHub Projects Section | Not started | 0/0 | - | - |
-| 5. Contact + Polish + QA | Not started | 0/0 | - | - |
+### Phase 3 — HackerSection + Scroll Transition ✓
+- [x] `HackerSection.tsx` — pentest phases, certs, tools, HTB/THM links, mailto CTA
+- [x] `ModeTransition.tsx` — GSAP pinned DEVELOPER→HACKER text morph with scrub
+- [x] Mobile: sin pin (`max-width: 767px` check)
+- [x] Reduced-motion: opacity crossfade sin scrub
 
----
+### Phase 5 — Contact + Polish + QA ✓
+- [x] `ContactSection.tsx` — email + clipboard copy, WhatsApp, LinkedIn, GitHub, CV download
+- [x] `SectionDotNav.tsx` — fixed right, IntersectionObserver, tooltip on hover, aparece al scrollear
+- [x] `FontsReady.tsx` — ScrollTrigger.refresh() en document.fonts.ready
+- [x] `id="hero"` agregado a HeroSection
+- [ ] Lighthouse audit ≥85 desktop (pendiente)
+- [ ] Cross-browser check (pendiente)
 
-## Performance Metrics
-
-| Metric | Target | Current |
-|--------|--------|---------|
-| Lighthouse Performance (desktop) | >= 85 | - |
-| Lighthouse Accessibility | >= 90 | - |
-| Glitch flash rate | <= 3/sec | - |
-| Mobile scroll FPS | ~60fps | - |
-
-| Plan | Phase | Duration | Tasks | Files |
-|------|-------|----------|-------|-------|
-| 01-scaffold | 01-foundation | 29 min | 3/3 | 16 created |
+### Pendiente datos reales
+- [ ] WhatsApp number en ContactSection.tsx (WHATSAPP const)
+- [ ] CV file en public/cv/juan-manuel-silva-cv.pdf
+- [ ] Cert images en public/certs/*.png
+- [ ] About Me section (usuario tiene diseño de 21st.dev)
 
 ---
 
-## Accumulated Context
-
-### Architecture Decisions (Locked)
-
-- **GSAP hook:** Always `useGSAP()` from `@gsap/react` — never `useEffect` for GSAP setup. Cleanup is automatic.
-- **Server-only data layer:** `lib/github.ts` uses `import 'server-only'` — build fails if imported from a Client Component.
-- **Animation isolation rule:** Framer Motion and GSAP must never target the same DOM element. GSAP owns wrapper/container transforms; Framer Motion owns inner content elements.
-- **Scroll foundation order:** `LenisSmoothScrollProvider` must be mounted and running before any `ScrollTrigger` animation is registered. Place Lenis at root layout level.
-- **Mobile pinning policy:** `ScrollTrigger` scrub + pin is disabled on touch devices. Detect via `ScrollTrigger.isTouch === 1` or `matchMedia('(hover: none)')`. Substitute CSS class-based transition.
-- **Reduced-motion gate:** Every GSAP animation is wrapped in `gsap.matchMedia()`. Reduced-motion branch provides opacity-only fallback (no translate, no scrub, no pin).
-- **tsParticles loading:** Dynamic import with `next/dynamic` and `ssr: false`. Particle count reduced to ≤30 on mobile viewport.
-- **GitHub data:** Fetched server-side in a Server Component, passed as serializable props to Client Components. `GitHubRepo` interface has no Date instances or class objects.
-- **ISR strategy:** GitHub repos revalidate every 3600 seconds with `next: { revalidate: 3600, tags: ['github-repos'] }`.
-- **create-next-app workaround:** When project dir has existing files, scaffold in temp dir and copy. Expected behavior on Windows.
-
-### Key File Locations
-
-- `package.json` — all dependencies at pinned exact versions
-- `tsconfig.json` — TypeScript strict mode, @/* alias
-- `postcss.config.mjs` — Tailwind v4 PostCSS adapter
-- `next.config.ts` — reactStrictMode: true
-- `.gitignore` — protects .env.local and build artifacts
-- `.env.example` — documents GITHUB_TOKEN and GITHUB_USERNAME
-- `.env.local` — gitignored, contains jmsD3v username, placeholder token
-- `src/app/layout.tsx` — root layout (to be updated in Plan 02)
-- `src/app/page.tsx` — root page (to be updated in later plans)
-- `lib/github.ts` — (to be created in Plan 03)
-- `components/animations/variants.ts` — (to be created in Plan 02/03)
-- `providers/SmoothScrollProvider.tsx` — (to be created in Plan 03)
-- `providers/AnimationProvider.tsx` — (to be created in Plan 03)
-- `app/globals.css` — (to be updated in Plan 02 with @theme and glitch @keyframes)
-
-### Open Questions / Todos
-
-- None
-
-### Blockers
-
-- None
+## Architecture Rules (vigentes)
+- pnpm exclusivamente
+- Types → siempre en `src/types/`
+- Interfaces inline en componentes → prohibido
+- `suppressHydrationWarning` en `<html>`
+- Footer @jmsDev obligatorio
+- GSAP → `useGSAP()` never `useEffect`
+- Framer Motion y GSAP nunca en el mismo elemento
+- Server-only: `lib/github.ts` nunca importar desde Client
 
 ---
 
-## Decisions Made
-
-1. Used temp directory workaround for create-next-app (can't scaffold into dir with existing files)
-2. postcss.config.mjs uses object format `{ "@tailwindcss/postcss": {} }` — v4 syntax, no tailwind.config file
-3. Package versions pinned exact (no caret) for animation libraries to prevent silent breaking upgrades
-4. GITHUB_USERNAME set to jmsD3v in .env.local
-
----
-
-## Session Continuity
-
-**To resume work:**
-1. Read this STATE.md for current position
-2. Read `.planning/ROADMAP.md` for phase details and success criteria
-3. Execute Plan 02: `01-PLAN-design-tokens.md` (or similar)
-
-**Next action:** Execute Phase 1 Plan 02 (design tokens / CSS theme)
-
-**Stopped at:** Completed Phase 1 Plan 01 (01-scaffold)
-
----
-
-*Last updated: 2026-05-05 — Plan 01 complete*
+*Last updated: 2026-05-05*

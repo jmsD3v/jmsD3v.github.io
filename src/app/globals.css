@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* =========================================================
    DESIGN TOKENS — Tailwind v4 @theme block
@@ -14,7 +14,12 @@
   --color-text: #e2e8f0;
   --color-text-muted: #64748b;
 
-  --font-mono: ui-monospace, "JetBrains Mono", "Fira Code", Consolas, monospace;
+  --font-mono: ui-monospace, 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+
+  /* HackerSection subsection accent colors */
+  --color-offensive: #ff4444;
+  --color-defensive: #22d3ee;
+  --color-forensics: #c084fc;
 }
 
 /* =========================================================
@@ -63,29 +68,70 @@
    the 3 flashes/sec threshold (Level A).
 ========================================================= */
 @keyframes glitch {
-  0%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
-  10%       { clip-path: inset(10% 0 80% 0); transform: translate(-3px, 1px); }
-  20%       { clip-path: inset(40% 0 50% 0); transform: translate(3px, -1px); }
-  30%       { clip-path: inset(70% 0 20% 0); transform: translate(-2px, 2px); }
-  40%       { clip-path: inset(90% 0 5% 0); transform: translate(2px, -2px); }
+  0%,
+  100% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+  10% {
+    clip-path: inset(10% 0 80% 0);
+    transform: translate(-3px, 1px);
+  }
+  20% {
+    clip-path: inset(40% 0 50% 0);
+    transform: translate(3px, -1px);
+  }
+  30% {
+    clip-path: inset(70% 0 20% 0);
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    clip-path: inset(90% 0 5% 0);
+    transform: translate(2px, -2px);
+  }
 }
 
 @keyframes glitch-2 {
-  0%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
-  15%       { clip-path: inset(80% 0 15% 0); transform: translate(3px, 1px); }
-  25%       { clip-path: inset(50% 0 40% 0); transform: translate(-3px, -1px); }
-  35%       { clip-path: inset(20% 0 70% 0); transform: translate(2px, 2px); }
-  45%       { clip-path: inset(5% 0 90% 0); transform: translate(-2px, -2px); }
+  0%,
+  100% {
+    clip-path: inset(100% 0 0 0);
+    transform: translate(0);
+  }
+  15% {
+    clip-path: inset(80% 0 15% 0);
+    transform: translate(3px, 1px);
+  }
+  25% {
+    clip-path: inset(50% 0 40% 0);
+    transform: translate(-3px, -1px);
+  }
+  35% {
+    clip-path: inset(20% 0 70% 0);
+    transform: translate(2px, 2px);
+  }
+  45% {
+    clip-path: inset(5% 0 90% 0);
+    transform: translate(-2px, -2px);
+  }
 }
 
 @keyframes scanline {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
 }
 
 @keyframes cursor-blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 /* =========================================================
@@ -150,4 +196,34 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-accent);
+}
+
+/* Accordion animations */
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+.animate-accordion-down {
+  animation: accordion-down 0.2s ease-out;
+}
+.animate-accordion-up {
+  animation: accordion-up 0.2s ease-out;
+}
+
+/* TextScramble dud chars */
+.dud {
+  color: var(--color-accent);
+  opacity: 0.7;
 }
