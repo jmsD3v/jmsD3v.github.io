@@ -1,26 +1,153 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* =========================================================
+   DESIGN TOKENS — Tailwind v4 @theme block
+   Variables defined here become Tailwind utility suffixes:
+   --color-accent → bg-accent, text-accent, border-accent
+   --font-mono    → font-mono utility class
+========================================================= */
+@theme {
+  --color-bg: #0a0a0a;
+  --color-surface: #111111;
+  --color-accent: #00ff41;
+  --color-accent-dim: #00cc33;
+  --color-text: #e2e8f0;
+  --color-text-muted: #64748b;
+
+  --font-mono: ui-monospace, "JetBrains Mono", "Fira Code", Consolas, monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* =========================================================
+   BASE STYLES
+========================================================= */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html {
+    overflow-x: hidden;
+    /* Smooth scroll fallback for non-Lenis contexts */
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    /* Prevent layout shift from scrollbar appearing/disappearing */
+    scrollbar-gutter: stable;
+    /* Subpixel antialiasing — improves text on dark backgrounds */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Terminal green selection highlight */
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =========================================================
+   GLITCH KEYFRAMES
+   Used by .glitch class below and directly by Phase 2 HeroSection.
+   Two layers with offset timing create chromatic aberration effect.
+
+   WCAG 2.3.1 compliance: at a 3s loop with 5 keyframe stops,
+   the effective flash rate is ~1.7 state-changes/sec — below
+   the 3 flashes/sec threshold (Level A).
+========================================================= */
+@keyframes glitch {
+  0%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  10%       { clip-path: inset(10% 0 80% 0); transform: translate(-3px, 1px); }
+  20%       { clip-path: inset(40% 0 50% 0); transform: translate(3px, -1px); }
+  30%       { clip-path: inset(70% 0 20% 0); transform: translate(-2px, 2px); }
+  40%       { clip-path: inset(90% 0 5% 0); transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+  15%       { clip-path: inset(80% 0 15% 0); transform: translate(3px, 1px); }
+  25%       { clip-path: inset(50% 0 40% 0); transform: translate(-3px, -1px); }
+  35%       { clip-path: inset(20% 0 70% 0); transform: translate(2px, 2px); }
+  45%       { clip-path: inset(5% 0 90% 0); transform: translate(-2px, -2px); }
+}
+
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* =========================================================
+   GLITCH CSS CLASS
+   Usage: <h1 class="glitch" data-text="TITLE">TITLE</h1>
+
+   Two pseudo-element layers use data-text as content and
+   animate with offset timing to produce chromatic aberration.
+
+   CRITICAL: Do NOT apply Framer Motion or GSAP transforms to
+   a .glitch element — CSS owns the transform on this element.
+   If you need Framer Motion entrance, wrap .glitch in a motion
+   div and animate the wrapper, not the .glitch element itself.
+========================================================= */
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Layer 1: cyan shift */
+.glitch::before {
+  color: #00ffff;
+  animation: glitch 3s infinite;
+}
+
+/* Layer 2: magenta shift, 0.15s offset */
+.glitch::after {
+  color: #ff0055;
+  animation: glitch-2 3s infinite 0.15s;
+}
+
+/* Accessibility: disable all motion for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .glitch::before,
+  .glitch::after {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   SCROLLBAR (keeps dark aesthetic consistent across browsers)
+========================================================= */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent-dim);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
 }
