@@ -1,6 +1,8 @@
 import { getRepos, categorizeRepo } from '@/lib/github'
 import { ProjectsClient } from './ProjectsClient'
 import { TerminalText } from '@/components/ui/TerminalText'
+import { PixelBg } from '@/components/ui/PixelBg'
+import { PIXEL_PALETTES } from '@/lib/pixel-palettes'
 import type { ProjectCardData } from '@/types/projects'
 
 const EXCLUDED_REPOS = new Set([
@@ -49,8 +51,9 @@ export async function ProjectsSection() {
   }
 
   return (
-    <section id="projects" className="bg-bg py-20">
-      <div className="container mx-auto max-w-7xl px-6">
+    <section id="projects" className="relative bg-bg py-20">
+      <PixelBg colors={PIXEL_PALETTES.projects} />
+      <div className="relative z-10 container mx-auto max-w-7xl px-6">
         <p className="text-accent text-sm tracking-widest uppercase mb-2">
           <TerminalText text="> ls ./proyectos --all" speed={40} delay={200} />
         </p>
@@ -65,7 +68,7 @@ export async function ProjectsSection() {
           projects={projects}
           githubUrl={`https://github.com/${username}`}
         />
-      </div>
+      </div>{/* end z-10 */}
     </section>
   )
 }

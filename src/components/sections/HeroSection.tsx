@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import type { Character } from '@/types/hero';
+import { useEffect, useRef } from 'react';
 
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
 const SCRAMBLE_CHARS = '!<>-_\\/[]{}—=+*^?#';
@@ -78,7 +77,7 @@ const PHRASES = [
   'CIBERSEGURIDAD',
   'AUTOMATIZACIONES A MEDIDA',
   'SOLUCIONES QUE ESCALAN',
-  'LAS BREÑAS AL MUNDO',
+  'DE LAS BREÑAS AL MUNDO',
 ];
 
 function ScrambledTitle() {
@@ -110,70 +109,127 @@ function ScrambledTitle() {
   return (
     <h1
       ref={elRef}
-      className='text-white text-5xl md:text-7xl font-bold tracking-widest font-mono text-center'
+      className='text-white text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-bold tracking-wide sm:tracking-wider md:tracking-widest font-mono text-center w-full px-4'
     >
       JUAN MANUEL SILVA
     </h1>
   );
 }
 
+/* ── Canvas rain ─────────────────────────────────────────────── */
+
+interface RainChar {
+  char: string;
+  x: number;   // 0–100 percent
+  y: number;   // 0–100 percent
+  speed: number;
+  active: boolean;
+}
+
 export function HeroSection() {
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [activeIndices, setActiveIndices] = useState<Set<number>>(new Set());
-
-  const createCharacters = useCallback(
-    () =>
-      Array.from({ length: 300 }, () => ({
-        char: CHARS[Math.floor(Math.random() * CHARS.length)],
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        speed: 0.1 + Math.random() * 0.3,
-      })),
-    [],
-  );
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    setCharacters(createCharacters());
-  }, [createCharacters]);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-  useEffect(() => {
-    if (characters.length === 0) return;
-    const id = setInterval(() => {
-      const next = new Set<number>();
-      const count = Math.floor(Math.random() * 3) + 3;
-      for (let i = 0; i < count; i++) {
-        next.add(Math.floor(Math.random() * characters.length));
-      }
-      setActiveIndices(next);
-    }, 50);
-    return () => clearInterval(id);
-  }, [characters.length]);
+    const isMobile = window.innerWidth < 768;
+    const count = isMobile ? 80 : 300;
 
-  useEffect(() => {
-    let rafId: number;
-    const tick = () => {
-      setCharacters((prev) =>
-        prev.map((c) => ({
-          ...c,
-          y: c.y >= 100 ? -5 : c.y + c.speed,
-          x: c.y >= 100 ? Math.random() * 100 : c.x,
-          char:
-            c.y >= 100
-              ? CHARS[Math.floor(Math.random() * CHARS.length)]
-              : c.char,
-        })),
-      );
-      rafId = requestAnimationFrame(tick);
+    // Init chars
+    const chars: RainChar[] = Array.from({ length: count }, () => ({
+      char: CHARS[Math.floor(Math.random() * CHARS.length)],
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      speed: 0.06 + Math.random() * 0.18,
+      active: false,
+    }));
+
+    // Resize canvas to match CSS size
+    const resize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
     };
-    rafId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId);
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+
+    // Active indices toggled every 50ms
+    let activeSet = new Set<number>();
+    const activeInterval = setInterval(() => {
+      const next = new Set<number>();
+      const c = Math.floor(Math.random() * 3) + 3;
+      for (let i = 0; i < c; i++) next.add(Math.floor(Math.random() * count));
+      activeSet = next;
+    }, 50);
+
+    let rafId = 0;
+
+    const draw = () => {
+      const w = canvas.width;
+      const h = canvas.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      for (let i = 0; i < chars.length; i++) {
+        const c = chars[i];
+
+        // Move
+        c.y += c.speed;
+        if (c.y > 105) {
+          c.y = -5;
+          c.x = Math.random() * 100;
+          c.char = CHARS[Math.floor(Math.random() * CHARS.length)];
+        }
+
+        const px = (c.x / 100) * w;
+        const py = (c.y / 100) * h;
+        const isActive = activeSet.has(i);
+
+        if (isActive) {
+          ctx.font = 'bold 22px monospace';
+          ctx.fillStyle = '#00ff41';
+          ctx.shadowColor = 'rgba(0,255,65,0.85)';
+          ctx.shadowBlur = 10;
+        } else {
+          ctx.font = '400 22px monospace';
+          ctx.fillStyle = 'rgba(100,116,139,0.28)';
+          ctx.shadowBlur = 0;
+        }
+        ctx.fillText(c.char, px, py);
+      }
+      ctx.shadowBlur = 0;
+
+      rafId = requestAnimationFrame(draw);
+    };
+
+    rafId = requestAnimationFrame(draw);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearInterval(activeInterval);
+      ro.disconnect();
+    };
   }, []);
 
   return (
-    <section id="hero" className='relative w-full h-screen bg-bg overflow-hidden flex items-center justify-center'>
-      <div className='relative z-20 flex flex-col items-center gap-4'>
+    <section
+      id="hero"
+      className='relative w-full h-screen bg-bg overflow-hidden flex items-center justify-center'
+    >
+      {/* Canvas rain — GPU layer, zero DOM layout impact */}
+      <canvas
+        ref={canvasRef}
+        aria-hidden
+        className="absolute inset-0 w-full h-full"
+        style={{ willChange: 'transform' }}
+      />
+
+      <div className='relative z-20 flex flex-col items-center gap-4 w-full max-w-4xl px-4'>
         <ScrambledTitle />
-        <p className='text-text-muted text-sm md:text-base tracking-widest font-mono'>
+        <p className='text-text-muted text-xs sm:text-sm md:text-base tracking-wide md:tracking-widest font-mono text-center'>
           Full Stack & Python Dev · AI Engineer · Ciberseguridad
         </p>
         <div className='flex gap-2 items-center text-accent mt-2'>
@@ -181,30 +237,6 @@ export function HeroSection() {
           <span className='text-xs tracking-widest'>DISPONIBLE</span>
         </div>
       </div>
-
-      {characters.map((char, i) => (
-        <span
-          key={i}
-          className={`absolute select-none pointer-events-none transition-colors duration-100 ${
-            activeIndices.has(i)
-              ? 'text-accent font-bold z-10'
-              : 'text-slate-700 font-light'
-          }`}
-          style={{
-            left: `${char.x}%`,
-            top: `${char.y}%`,
-            transform: `translate(-50%, -50%) ${activeIndices.has(i) ? 'scale(1.25)' : 'scale(1)'}`,
-            textShadow: activeIndices.has(i)
-              ? '0 0 8px rgba(0,255,65,0.8), 0 0 16px rgba(0,255,65,0.4)'
-              : 'none',
-            opacity: activeIndices.has(i) ? 1 : 0.3,
-            fontSize: '1.4rem',
-            willChange: 'top',
-          }}
-        >
-          {char.char}
-        </span>
-      ))}
     </section>
   );
 }

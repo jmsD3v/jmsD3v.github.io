@@ -60,7 +60,7 @@ export function ProjectCard({ project, selected, onClick, className }: ProjectCa
           </span>
         )}
         {project.topics.slice(0, 2).map((t) => (
-          <span key={t} className="font-mono text-xs text-text-muted/60 border border-surface rounded px-1.5 py-0.5">
+          <span key={t} className="font-mono text-xs text-text-muted border border-surface rounded px-1.5 py-0.5">
             {t}
           </span>
         ))}

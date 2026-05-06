@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 'use client'
 
 import { useRef } from 'react'
@@ -16,7 +17,6 @@ export function ModeTransition() {
 
   useGSAP(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const isMobile = window.matchMedia('(max-width: 767px)').matches
 
     if (prefersReduced) {
       gsap.fromTo(
@@ -51,9 +51,8 @@ export function ModeTransition() {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
-        start: 'top top',
-        end: '+=500',
-        pin: !isMobile,
+        start: 'top 75%',
+        end: 'bottom 25%',
         scrub: 1.2,
       },
     })

@@ -1,13 +1,13 @@
 # STATE — jms-folio
 
-**Last updated:** 2026-05-05
-**Session:** Phases 1–5 complete — pendiente: About Me + datos reales (WhatsApp, CV, cert images)
+**Last updated:** 2026-05-06
+**Session:** Lighthouse audit completado — todos los scores ≥85. Pendiente: cross-browser, CV PDF.
 
 ---
 
 ## Current Position
 
-**Next action:** About Me section + datos reales (WhatsApp, CV path, cert images)
+**Next action:** Cross-browser check (Chrome, Firefox, Edge). Luego CV PDF.
 
 **Progress bar:**
 ```
@@ -15,7 +15,7 @@ Phase 1 [##########] 100% ✓
 Phase 2 [##########] 100% ✓
 Phase 3 [##########] 100% ✓
 Phase 4 [##########] 100% ✓
-Phase 5 [##########] 100% ✓
+Phase 5 [##########]  95% — Cross-browser pendiente + CV PDF
 ```
 
 ---
@@ -27,38 +27,53 @@ Phase 5 [##########] 100% ✓
 src/
   app/
     layout.tsx          ✓ SmoothScrollProvider + AnimationProvider + metadata
-    page.tsx            ✓ HeroSection + ProjectProvider + DevSection + ProjectsSection + footer
+    page.tsx            ✓ todas las secciones + footer @jmsDev
     globals.css         ✓ @theme tokens, glitch keyframes, accordion anim, .dud, scrollbar
   lib/
     github.ts           ✓ server-only, /user/repos (públicos+privados), categorizeRepo inteligente
     utils.ts            ✓ cn()
   types/
-    hero.ts             ✓ Character
-    github.ts           ✓ GitHubRepo
-    showcase.ts         ✓ FeatureShowcaseProps, TabMedia, ShowcaseStep
-    projects.ts         ✓ ProjectCardData, ProjectFilter
+    hero.ts / github.ts / showcase.ts / projects.ts / carousel.ts / about.ts  ✓
   contexts/
-    ProjectContext.tsx  ✓ selectedProject state compartido DevSection ↔ ProjectsSection
+    ProjectContext.tsx  ✓ selectedProject estado compartido DevSection ↔ ProjectsSection
   components/
-    animations/
-      variants.ts       ✓ fadeInFrom*, staggerContainer, glitchReveal
+    animations/variants.ts  ✓ fadeInFrom*, staggerContainer, glitchReveal
     providers/
       SmoothScrollProvider.tsx  ✓ Lenis + GSAP ticker
       AnimationProvider.tsx     ✓ LazyMotion + domAnimation
+      FontsReady.tsx            ✓ ScrollTrigger.refresh() en fonts.ready
     sections/
-      HeroSection.tsx           ✓ RainingLetters + TextScramble cycling phrases
-      DevSection.tsx            ✓ TerminalText header + DevShowcase
-      DevShowcase.tsx           ✓ FeatureShowcase reactivo al proyecto seleccionado
-      ProjectsSection.tsx       ✓ Server Component, fetch GitHub, blacklist, exclusiones
-      ProjectsClient.tsx        ✓ Filtros All/Dev/Hacker + cards + scroll-to-dev on select
-      ModeTransition.tsx        ✓ GSAP pinned DEVELOPER→HACKER morph, mobile no-pin, reduced-motion crossfade
-      HackerSection.tsx         ✓ Pentest phases, certs, tool arsenal, HTB/THM links, mailto CTA
+      HeroSection.tsx     ✓ RainingLetters (80 mobile / 300 desktop) + TextScramble cycling
+                            ✓ Responsive: text-2xl→lg:text-7xl, tracking escalado, 300→80 chars mobile
+      AboutSection.tsx    ✓ 3-col grid, foto centrada, BUILD/SECURE overlay, location footer
+                            ✓ Responsive: min-h-screen, imagen escalada, clamp ajustado
+      DevSection.tsx      ✓ TerminalText + DevShowcase + VerticalCarousel certs (h=420)
+      DevShowcase.tsx     ✓ FeatureShowcase reactivo + PROJECT_PREVIEW_TABS (tecnoinstalador)
+      ProjectsSection.tsx ✓ Server Component, fetch GitHub ISR, blacklist, exclusiones
+      ProjectsClient.tsx  ✓ Filtros All/Dev/Hacker + cards + scroll-to-dev on select
+      ModeTransition.tsx  ✓ GSAP pinned DEVELOPER→HACKER morph, mobile no-pin, reduced-motion
+      HackerSection.tsx   ✓ Pentest phases, certs (h=420), tools, HTB/THM links, mailto CTA
+      ContactSection.tsx  ✓ Gmail compose + WhatsApp real + LinkedIn + GitHub + CV download
     ui/
-      ProjectCard.tsx           ✓ button, selected state, lang color, topics
-      TerminalText.tsx          ✓ typewriter + cursor parpadeante permanente
-      badge.tsx / button.tsx / card.tsx / tabs.tsx / accordion.tsx  ✓
-    feature-showcase.tsx        ✓ layout 12-col, accordion steps, tabs image, object-contain
-  JUANMA.md                     ✓ (era loQueMeGusta.md)
+      ProjectCard.tsx      ✓ button, selected state, lang color, topics
+      TerminalText.tsx     ✓ typewriter + cursor parpadeante
+      SectionDotNav.tsx    ✓ 6 secciones, IntersectionObserver, tooltip, aparece al scrollear
+      VerticalCarousel.tsx ✓ cert images, dot nav, animación slide, [captura pendiente] fallback
+      badge / button / card / tabs / accordion  ✓
+    feature-showcase.tsx  ✓ 12-col grid, accordion steps, tabs image, mobile/desktop fit inteligente
+```
+
+### Assets presentes
+```
+public/
+  about/juanma.png          ✓
+  certs/*.png               ✓ (8 archivos)
+  projects/
+    jms-folio-desktop.png   ✓
+    jms-folio-mobile.png    ✓
+    tecnoinstalador-desktop.png  ✓
+    tecnoinstalador-mobile.png   ✓
+  cv/                       ✓ dir existe — FALTA juan-manuel-silva-cv.pdf (usuario debe agregar)
 ```
 
 ### GitHub repos configurados
@@ -71,25 +86,12 @@ src/
 
 ## Pending
 
-### Phase 3 — HackerSection + Scroll Transition ✓
-- [x] `HackerSection.tsx` — pentest phases, certs, tools, HTB/THM links, mailto CTA
-- [x] `ModeTransition.tsx` — GSAP pinned DEVELOPER→HACKER text morph with scrub
-- [x] Mobile: sin pin (`max-width: 767px` check)
-- [x] Reduced-motion: opacity crossfade sin scrub
-
-### Phase 5 — Contact + Polish + QA ✓
-- [x] `ContactSection.tsx` — email + clipboard copy, WhatsApp, LinkedIn, GitHub, CV download
-- [x] `SectionDotNav.tsx` — fixed right, IntersectionObserver, tooltip on hover, aparece al scrollear
-- [x] `FontsReady.tsx` — ScrollTrigger.refresh() en document.fonts.ready
-- [x] `id="hero"` agregado a HeroSection
-- [ ] Lighthouse audit ≥85 desktop (pendiente)
-- [ ] Cross-browser check (pendiente)
-
-### Pendiente datos reales
-- [ ] WhatsApp number en ContactSection.tsx (WHATSAPP const)
-- [ ] CV file en public/cv/juan-manuel-silva-cv.pdf
-- [ ] Cert images en public/certs/*.png
-- [ ] About Me section (usuario tiene diseño de 21st.dev)
+### Phase 5 — finales
+- [x] Build limpio sin errores TypeScript/ESLint
+- [x] Mobile responsive: Hero + About corregidos
+- [x] **Lighthouse audit ≥85 desktop** — Perf:92 A11y:100 BP:100 SEO:100
+- [ ] **Cross-browser check (Chrome, Firefox, Edge)** ← NEXT
+- [ ] CV PDF: colocar `juan-manuel-silva-cv.pdf` en `public/cv/`
 
 ---
 
@@ -102,7 +104,8 @@ src/
 - GSAP → `useGSAP()` never `useEffect`
 - Framer Motion y GSAP nunca en el mismo elemento
 - Server-only: `lib/github.ts` nunca importar desde Client
+- ESLint: `/* eslint-disable react/jsx-no-comment-textnodes */` en secciones con texto `// terminal style`
 
 ---
 
-*Last updated: 2026-05-05*
+*Last updated: 2026-05-06*

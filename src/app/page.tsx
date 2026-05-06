@@ -31,7 +31,7 @@ export default function Home() {
           href="https://www.linkedin.com/in/jmsilva83"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-accent hover:underline"
+          className="text-accent underline"
         >
           @jmsDev
         </a>{' '}
