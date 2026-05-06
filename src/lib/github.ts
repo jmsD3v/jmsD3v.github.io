@@ -3,23 +3,33 @@ import type { GitHubRepo } from '@/types/github'
 
 const GITHUB_API = 'https://api.github.com'
 
+const GITHUB_USERNAME = process.env.GITHUB_USERNAME ?? 'jmsD3v'
+
 export async function getRepos(): Promise<GitHubRepo[]> {
   const token = process.env.GITHUB_TOKEN
 
-  // /user/repos requiere auth y devuelve públicos + privados
-  // /users/{user}/repos solo devuelve públicos
-  const res = await fetch(`${GITHUB_API}/user/repos?per_page=100&sort=updated&affiliation=owner`, {
-    headers: {
-      Accept: 'application/vnd.github+json',
-      ...(token && { Authorization: `Bearer ${token}` }),
-    },
-    next: { revalidate: 3600, tags: ['github-repos'] },
-  })
+  // With token: /user/repos (includes all owned repos, sorted)
+  // Without token: /users/{user}/repos (public only, no auth needed)
+  const url = token
+    ? `${GITHUB_API}/user/repos?per_page=100&sort=updated&affiliation=owner`
+    : `${GITHUB_API}/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`
 
-  if (!res.ok) throw new Error(`GitHub API error: ${res.status}`)
+  try {
+    const res = await fetch(url, {
+      headers: {
+        Accept: 'application/vnd.github+json',
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+      next: { revalidate: 3600, tags: ['github-repos'] },
+    })
 
-  const data = await res.json()
-  return data as GitHubRepo[]
+    if (!res.ok) return []
+
+    const data = await res.json()
+    return data as GitHubRepo[]
+  } catch {
+    return []
+  }
 }
 
 const HACKER_TOPICS = ['security', 'ctf', 'hacking', 'pentest', 'cybersecurity', 'osint', 'pentesting']
