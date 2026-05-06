@@ -12,7 +12,7 @@ interface TerminalTextProps {
 
 export function TerminalText({ text, className, speed = 40, delay = 0 }: TerminalTextProps) {
   const [displayed, setDisplayed] = useState('')
-  const [done, setDone] = useState(false)
+  const [, setDone] = useState(false)
   const prevText = useRef('')
 
   useEffect(() => {

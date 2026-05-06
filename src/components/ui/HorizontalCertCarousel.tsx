@@ -14,7 +14,7 @@ const containerVariants = {
 
 const cardVariants = {
   hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeOut' } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeOut' as const } },
 }
 
 interface HorizontalCertCarouselProps {
@@ -119,7 +119,7 @@ function CertCard({ item, accentColor }: { item: CarouselItem; accentColor: stri
   return (
     <m.div
       variants={cardVariants}
-      whileHover={{ y: -4, transition: { duration: 0.2, ease: 'easeOut' } }}
+      whileHover={{ y: -4, transition: { duration: 0.2, ease: 'easeOut' as const } }}
       className="border border-surface rounded-md overflow-hidden bg-surface/10 flex flex-col transition-colors duration-200 group cursor-default"
       onMouseEnter={(e) => (e.currentTarget.style.borderColor = accentColor + '55')}
       onMouseLeave={(e) => (e.currentTarget.style.borderColor = '')}

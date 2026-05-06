@@ -180,8 +180,9 @@ export function HackerPixelBg() {
     const ro = new ResizeObserver(resize)
     ro.observe(wrapper)
 
+    const anim = animRef.current
     return () => {
-      const req = animRef.current.request
+      const req = anim.request
       if (req) cancelAnimationFrame(req)
       ro.disconnect()
     }

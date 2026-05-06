@@ -4,7 +4,6 @@ import type { GitHubRepo } from '@/types/github'
 const GITHUB_API = 'https://api.github.com'
 
 export async function getRepos(): Promise<GitHubRepo[]> {
-  const username = process.env.GITHUB_USERNAME
   const token = process.env.GITHUB_TOKEN
 
   // /user/repos requiere auth y devuelve públicos + privados

@@ -220,8 +220,9 @@ export function PixelBg({ colors, opacity = 0.20, gap = 12, duration = 480 }: Pi
     // Fallback: measure once after first paint in case RO fires before layout settles
     const raf = requestAnimationFrame(resize)
 
+    const anim = animRef.current
     return () => {
-      const req = animRef.current.request
+      const req = anim.request
       if (req) cancelAnimationFrame(req)
       cancelAnimationFrame(raf)
       ro.disconnect()
