@@ -61,7 +61,7 @@ export function SectionDotNav() {
   return (
     <nav
       aria-label="Secciones"
-      className={`fixed right-5 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-3 transition-opacity duration-500 ${
+      className={`hidden md:flex fixed right-5 top-1/2 -translate-y-1/2 z-50 flex-col items-center gap-3 transition-opacity duration-500 ${
         visible ? 'opacity-100' : 'opacity-0'
       }`}
     >

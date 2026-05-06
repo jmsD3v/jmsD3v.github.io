@@ -11,7 +11,7 @@ import { FontsReady } from '@/components/providers/FontsReady'
 
 export default function Home() {
   return (
-    <main className="bg-bg text-text font-mono">
+    <main className="bg-bg text-text font-mono overflow-x-hidden">
       <SectionDotNav />
       <FontsReady />
 

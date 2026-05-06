@@ -44,7 +44,8 @@
     background-color: var(--color-bg);
     color: var(--color-text);
     font-family: var(--font-mono);
-    /* Prevent layout shift from scrollbar appearing/disappearing */
+    overflow-x: hidden;
+    /* Prevent layout shift from scrollbar appearing/disappearing (desktop only) */
     scrollbar-gutter: stable;
     /* Subpixel antialiasing — improves text on dark backgrounds */
     -webkit-font-smoothing: antialiased;
