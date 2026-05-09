@@ -31,15 +31,15 @@ export function FeatureShowcase({
   const initial = defaultTab ?? tabs[0]?.value ?? 'tab-0';
 
   return (
-    <section className={cn('w-full bg-transparent text-text', className)}>
-      <div className='container mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-16 md:grid-cols-12 md:py-20 lg:gap-14'>
+    <section className={cn('w-full bg-transparent text-text overflow-x-hidden', className)}>
+      <div className='container mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 sm:px-6 sm:py-14 md:grid-cols-12 md:py-20 lg:gap-14'>
         {/* Left column */}
         <div className={cn('md:col-span-6', reversed && 'md:order-last')}>
           <Badge variant='outline' className='mb-6'>
             {eyebrow}
           </Badge>
 
-          <h2 className='font-mono text-4xl font-bold leading-tight tracking-tight text-text sm:text-5xl'>
+          <h2 className='font-mono text-2xl font-bold leading-tight tracking-tight text-text sm:text-3xl md:text-4xl lg:text-5xl'>
             {title}
           </h2>
 
@@ -91,8 +91,8 @@ export function FeatureShowcase({
         {/* Right column */}
         <div className='md:col-span-6'>
           <Card
-            className='relative overflow-hidden p-0 aspect-[16/10] min-h-[320px] md:min-h-[380px]'
-            style={{ minHeight: panelMinHeight }}
+            className='relative overflow-hidden p-0 h-[240px] sm:h-[300px] md:h-auto md:aspect-[16/10] md:min-h-[380px] w-full'
+            style={{ minHeight: undefined }}
           >
             <Tabs defaultValue={initial} className='relative h-full w-full'>
               <div className='relative h-full w-full'>
