@@ -1,10 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { m, AnimatePresence } from 'framer-motion'
 import { ProjectCard } from '@/components/ui/ProjectCard'
 import { Button } from '@/components/ui/button'
-import { staggerContainer, fadeInFromBottom } from '@/components/animations/variants'
+import { cardStack, cardStackContainer } from '@/components/animations/variants'
 import { useProject } from '@/contexts/ProjectContext'
 import type { ProjectCardData, ProjectFilter, SecGroup } from '@/types/projects'
 
@@ -49,8 +49,18 @@ interface ProjectsClientProps {
   githubUrl: string
 }
 
-export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
-  const [active, setActive] = useState<ProjectFilter>('all')
+/** Cards grid — whileInView so the stack animation triggers on scroll entry */
+function CardsGrid({
+  projects,
+  accentColor,
+  accentBg,
+  accentBorder,
+}: {
+  projects: ProjectCardData[]
+  accentColor?: string
+  accentBg?: string
+  accentBorder?: string
+}) {
   const { selected, setSelected } = useProject()
 
   const handleSelect = (project: ProjectCardData) => {
@@ -61,6 +71,45 @@ export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
     }
   }
 
+  return (
+    <m.div
+      variants={cardStackContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-60px' }}
+      className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+      style={{ perspective: 1000 }}
+    >
+      {projects.map((project) => (
+        <m.div key={project.id} variants={cardStack}>
+          <ProjectCard
+            project={project}
+            selected={selected?.id === project.id}
+            onClick={() => handleSelect(project)}
+            accentColor={accentColor}
+            accentBg={accentBg}
+            accentBorder={accentBorder}
+          />
+        </m.div>
+      ))}
+    </m.div>
+  )
+}
+
+export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
+  const [active, setActive] = useState<ProjectFilter>('all')
+
+  // When filter changes the page layout shifts — refresh GSAP ScrollTrigger
+  // so ModeTransition recalculates its scroll positions
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('resize'))
+      }
+    }, 350) // after AnimatePresence exit/enter finishes
+    return () => clearTimeout(timer)
+  }, [active])
+
   const filtered = active === 'all'
     ? projects
     : projects.filter((p) => p.category === active)
@@ -68,7 +117,7 @@ export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
   return (
     <div>
       {/* Filter buttons */}
-      <div className="flex gap-2 mb-8">
+      <div className="flex gap-2 mb-8 flex-wrap">
         {FILTERS.map((f) => (
           <Button
             key={f.value}
@@ -87,15 +136,15 @@ export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
       </div>
 
       <AnimatePresence mode="wait">
-        {/* ── Cybersecurity: grouped by offensive / defensive / forensic ── */}
+        {/* ── Cybersecurity: 3 colour-coded groups ── */}
         {active === 'hacker' ? (
           <m.div
             key="hacker-grouped"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="space-y-10"
+            transition={{ duration: 0.2 }}
+            className="space-y-12"
           >
             {SEC_GROUPS.map((group) => {
               const groupProjects = filtered.filter((p) => p.secGroup === group.key)
@@ -103,38 +152,24 @@ export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
               return (
                 <div key={group.key}>
                   {/* Group header */}
-                  <div className={`flex items-center gap-3 mb-4 pb-3 border-b ${group.border}`}>
+                  <div className={`flex items-center gap-3 mb-5 pb-3 border-b ${group.border}`}>
                     <span
-                      className="font-mono text-sm font-bold tracking-widest"
+                      className="font-mono text-sm font-bold tracking-widest uppercase"
                       style={{ color: group.accent }}
                     >
                       {group.label}
                     </span>
-                    <span className="font-mono text-xs text-text-muted opacity-60">
+                    <span className="font-mono text-xs text-text-muted opacity-50">
                       {groupProjects.length} proyectos
                     </span>
                   </div>
 
-                  {/* Cards */}
-                  <m.div
-                    variants={staggerContainer}
-                    initial="hidden"
-                    animate="visible"
-                    className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
-                  >
-                    {groupProjects.map((project) => (
-                      <m.div key={project.id} variants={fadeInFromBottom}>
-                        <ProjectCard
-                          project={project}
-                          selected={selected?.id === project.id}
-                          onClick={() => handleSelect(project)}
-                          accentColor={group.accent}
-                          accentBg={group.bg}
-                          accentBorder={group.border}
-                        />
-                      </m.div>
-                    ))}
-                  </m.div>
+                  <CardsGrid
+                    projects={groupProjects}
+                    accentColor={group.accent}
+                    accentBg={group.bg}
+                    accentBorder={group.border}
+                  />
                 </div>
               )
             })}
@@ -143,20 +178,12 @@ export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
           /* ── All / Dev: flat grid ── */
           <m.div
             key={active}
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
           >
-            {filtered.map((project) => (
-              <m.div key={project.id} variants={fadeInFromBottom}>
-                <ProjectCard
-                  project={project}
-                  selected={selected?.id === project.id}
-                  onClick={() => handleSelect(project)}
-                />
-              </m.div>
-            ))}
+            <CardsGrid projects={filtered} />
           </m.div>
         )}
       </AnimatePresence>

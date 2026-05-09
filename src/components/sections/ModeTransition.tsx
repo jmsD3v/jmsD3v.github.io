@@ -29,6 +29,7 @@ export function ModeTransition() {
             start: 'top 70%',
             end: 'bottom 30%',
             scrub: true,
+            invalidateOnRefresh: true,
           },
         },
       )
@@ -42,6 +43,7 @@ export function ModeTransition() {
             start: 'top 70%',
             end: 'bottom 30%',
             scrub: true,
+            invalidateOnRefresh: true,
           },
         },
       )
@@ -54,6 +56,7 @@ export function ModeTransition() {
         start: 'top 75%',
         end: 'bottom 25%',
         scrub: 1.2,
+        invalidateOnRefresh: true,
       },
     })
 
@@ -91,13 +94,13 @@ export function ModeTransition() {
         <div className="relative h-16 overflow-visible">
           <div
             ref={devRef}
-            className="absolute inset-0 flex items-center justify-center font-mono text-5xl font-bold text-text tracking-wider md:text-6xl"
+            className="absolute inset-0 flex items-center justify-center font-mono text-4xl font-bold text-text tracking-wider sm:text-5xl md:text-6xl"
           >
             DEVELOPER
           </div>
           <div
             ref={hackerRef}
-            className="absolute inset-0 flex items-center justify-center font-mono text-5xl font-bold text-accent tracking-wider md:text-6xl"
+            className="absolute inset-0 flex items-center justify-center font-mono text-3xl font-bold text-accent tracking-wider sm:text-4xl md:text-5xl lg:text-6xl"
             style={{ opacity: 0, transform: 'translateY(30px)' }}
           >
             CYBERSECURITY
