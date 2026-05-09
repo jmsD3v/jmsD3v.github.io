@@ -100,7 +100,7 @@ export function ModeTransition() {
             className="absolute inset-0 flex items-center justify-center font-mono text-5xl font-bold text-accent tracking-wider md:text-6xl"
             style={{ opacity: 0, transform: 'translateY(30px)' }}
           >
-            HACKER
+            CYBERSECURITY
           </div>
         </div>
 

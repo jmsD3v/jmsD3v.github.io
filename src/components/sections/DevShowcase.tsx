@@ -25,7 +25,7 @@ const DEFAULT: FeatureShowcaseProps = {
     {
       id: 'anim',
       title: 'Animaciones de alta calidad',
-      text: 'Lenis smooth scroll, TextScramble, lluvia de caracteres y transición Dev→Hacker con GSAP.',
+      text: 'Lenis smooth scroll, TextScramble, lluvia de caracteres y transición Dev→Cybersecurity con GSAP.',
     },
   ],
   tabs: [

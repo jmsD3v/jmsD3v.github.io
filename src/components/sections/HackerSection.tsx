@@ -338,7 +338,7 @@ export function HackerSection() {
         <div className='container mx-auto max-w-7xl px-6 pt-20 pb-4'>
           <p className='text-accent text-sm tracking-widest uppercase mb-2'>
             <TerminalText
-              text='> ls ./proyectos/hacker'
+              text='> ls ./proyectos/cybersecurity'
               speed={45}
               delay={200}
             />

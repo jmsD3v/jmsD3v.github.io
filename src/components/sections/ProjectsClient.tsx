@@ -11,7 +11,7 @@ import type { ProjectCardData, ProjectFilter } from '@/types/projects'
 const FILTERS: { value: ProjectFilter; label: string }[] = [
   { value: 'all', label: 'All' },
   { value: 'dev', label: 'Dev' },
-  { value: 'hacker', label: 'Hacker' },
+  { value: 'hacker', label: 'Cybersecurity' },
 ]
 
 interface ProjectsClientProps {

@@ -12,7 +12,7 @@ const SECTIONS: NavSection[] = [
   { id: 'about',    label: 'Sobre mí' },
   { id: 'dev',      label: 'Dev' },
   { id: 'projects', label: 'Proyectos' },
-  { id: 'hacker',   label: 'Hacker' },
+  { id: 'hacker',   label: 'Cybersecurity' },
   { id: 'contact',  label: 'Contacto' },
 ]
 
