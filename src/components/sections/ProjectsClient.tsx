@@ -184,7 +184,7 @@ export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
                 <div>
                   <div className="flex items-center gap-3 mb-5 pb-3 border-b border-surface/60">
                     <span className="font-mono text-sm font-bold tracking-widest uppercase text-text-muted">
-                      // Other
+                      {'// Other'}
                     </span>
                     <span className="font-mono text-xs text-text-muted opacity-50">
                       {others.length} proyectos
