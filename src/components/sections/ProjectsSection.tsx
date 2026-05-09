@@ -1,4 +1,4 @@
-import { getRepos, categorizeRepo } from '@/lib/github'
+import { getRepos, categorizeRepo, getSecGroup } from '@/lib/github'
 import { ProjectsClient } from './ProjectsClient'
 import { TerminalText } from '@/components/ui/TerminalText'
 import { PixelBg } from '@/components/ui/PixelBg'
@@ -40,6 +40,7 @@ export async function ProjectsSection() {
         stargazers_count: r.stargazers_count,
         topics: r.topics,
         category: categorizeRepo(r),
+        secGroup: getSecGroup(r),
       }))
       .filter((r) => r.category !== 'other')
       .sort((a, b) => {

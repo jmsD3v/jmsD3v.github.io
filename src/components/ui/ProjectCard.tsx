@@ -16,27 +16,60 @@ interface ProjectCardProps {
   selected?: boolean
   onClick?: () => void
   className?: string
+  /** Override accent color for cybersecurity group cards */
+  accentColor?: string
+  accentBg?: string
+  accentBorder?: string
 }
 
-export function ProjectCard({ project, selected, onClick, className }: ProjectCardProps) {
+export function ProjectCard({
+  project,
+  selected,
+  onClick,
+  className,
+  accentColor,
+  accentBg,
+  accentBorder,
+}: ProjectCardProps) {
   const langColor = project.language ? (LANG_COLORS[project.language] ?? '#64748b') : '#64748b'
+
+  // Border
+  const borderClass = selected
+    ? (accentBorder ?? 'border-accent')
+    : accentBorder
+      ? accentBorder
+      : 'border-surface hover:border-accent/50'
+
+  // Background
+  const bgClass = selected
+    ? (accentBg ?? 'bg-surface/70')
+    : accentBg
+      ? accentBg
+      : 'bg-surface/40 hover:bg-surface/70'
+
+  // Title color: selected → accent, cybersecurity card hover → group color, default → text/hover-accent
+  const titleStyle = selected
+    ? { color: accentColor ?? 'var(--color-accent)' }
+    : undefined
+
+  const titleClass = cn(
+    'font-mono text-sm font-semibold transition-colors truncate',
+    !selected && !accentColor && 'text-text group-hover:text-accent',
+    !selected && accentColor && 'text-text',
+  )
 
   return (
     <button
       onClick={onClick}
       className={cn(
-        'group w-full text-left flex flex-col gap-3 rounded-xl border bg-surface/40 p-5 transition-colors duration-200',
-        selected
-          ? 'border-accent bg-surface/70'
-          : 'border-surface hover:border-accent/50 hover:bg-surface/70',
+        'group w-full text-left flex flex-col gap-3 rounded-xl border p-5 transition-colors duration-200',
+        borderClass,
+        bgClass,
         className,
       )}
     >
       <div className="flex items-start justify-between gap-2">
-        <h3 className={cn(
-          'font-mono text-sm font-semibold transition-colors truncate',
-          selected ? 'text-accent' : 'text-text group-hover:text-accent',
-        )}>
+        <h3 className={titleClass} style={titleStyle}>
           {project.name}
         </h3>
         {project.stargazers_count > 0 && (
@@ -52,7 +85,7 @@ export function ProjectCard({ project, selected, onClick, className }: ProjectCa
         </p>
       )}
 
-      <div className="mt-auto flex items-center gap-3">
+      <div className="mt-auto flex items-center gap-3 flex-wrap">
         {project.language && (
           <span className="flex items-center gap-1.5 font-mono text-xs text-text-muted">
             <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: langColor }} />
@@ -60,7 +93,10 @@ export function ProjectCard({ project, selected, onClick, className }: ProjectCa
           </span>
         )}
         {project.topics.slice(0, 2).map((t) => (
-          <span key={t} className="font-mono text-xs text-text-muted border border-surface rounded px-1.5 py-0.5">
+          <span
+            key={t}
+            className="font-mono text-xs text-text-muted border border-surface rounded px-1.5 py-0.5"
+          >
             {t}
           </span>
         ))}

@@ -38,6 +38,20 @@ const DEV_TOPICS = ['dev', 'fullstack', 'frontend', 'backend', 'nextjs', 'react'
 const HACKER_NAME_PATTERNS = [/security/i, /hack/i, /pentest/i, /ctf/i, /osint/i, /exploit/i, /vuln/i, /cyber/i]
 const DEV_NAME_PATTERNS = [/landing/i, /ecommerce/i, /shop/i, /store/i, /app/i, /web/i, /front/i, /back/i, /api/i, /chat/i, /finance/i, /stock/i, /pedidos/i, /gestion/i, /booked/i, /vending/i, /escrutinio/i, /racket/i, /rapidito/i, /hexa/i, /solar/i, /pocket/i, /retro/i, /tecno/i, /folio/i]
 
+import type { SecGroup } from '@/types/projects'
+
+const OFFENSIVE_REPOS = new Set(['reconai', 'webhunter', 'phishsim'])
+const DEFENSIVE_REPOS = new Set(['soclite', 'threatfeed', 'honeygrid'])
+const FORENSIC_REPOS  = new Set(['dfirauto', 'malwarescope', 'pcapforge'])
+
+export function getSecGroup(repo: GitHubRepo): SecGroup | undefined {
+  const name = repo.name.toLowerCase()
+  if (OFFENSIVE_REPOS.has(name)) return 'offensive'
+  if (DEFENSIVE_REPOS.has(name)) return 'defensive'
+  if (FORENSIC_REPOS.has(name))  return 'forensic'
+  return undefined
+}
+
 export function categorizeRepo(repo: GitHubRepo): 'dev' | 'hacker' | 'other' {
   const topics = repo.topics ?? []
   const searchText = `${repo.name} ${repo.description ?? ''}`.toLowerCase()
