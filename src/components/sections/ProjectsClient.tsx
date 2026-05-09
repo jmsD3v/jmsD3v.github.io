@@ -147,7 +147,9 @@ export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
             className="space-y-12"
           >
             {SEC_GROUPS.map((group) => {
-              const groupProjects = filtered.filter((p) => p.secGroup === group.key)
+              const groupProjects = filtered
+                .filter((p) => p.secGroup === group.key)
+                .sort((a, b) => a.secOrder - b.secOrder)
               if (groupProjects.length === 0) return null
               return (
                 <div key={group.key}>
@@ -173,6 +175,25 @@ export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
                 </div>
               )
             })}
+
+            {/* ── Other hacker repos without a secGroup (ai-agent-security-lab, etc.) ── */}
+            {(() => {
+              const others = filtered.filter((p) => !p.secGroup)
+              if (others.length === 0) return null
+              return (
+                <div>
+                  <div className="flex items-center gap-3 mb-5 pb-3 border-b border-surface/60">
+                    <span className="font-mono text-sm font-bold tracking-widest uppercase text-text-muted">
+                      // Other
+                    </span>
+                    <span className="font-mono text-xs text-text-muted opacity-50">
+                      {others.length} proyectos
+                    </span>
+                  </div>
+                  <CardsGrid projects={others} />
+                </div>
+              )
+            })()}
           </m.div>
         ) : (
           /* ── All / Dev: flat grid ── */

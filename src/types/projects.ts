@@ -13,4 +13,5 @@ export interface ProjectCardData {
   topics: string[]
   category: 'dev' | 'hacker' | 'other'
   secGroup?: SecGroup
+  secOrder: number
 }

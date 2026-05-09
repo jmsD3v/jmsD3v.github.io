@@ -1,4 +1,4 @@
-import { getRepos, categorizeRepo, getSecGroup } from '@/lib/github'
+import { getRepos, categorizeRepo, getSecGroup, getSecOrder } from '@/lib/github'
 import { ProjectsClient } from './ProjectsClient'
 import { TerminalText } from '@/components/ui/TerminalText'
 import { PixelBg } from '@/components/ui/PixelBg'
@@ -41,6 +41,7 @@ export async function ProjectsSection() {
         topics: r.topics,
         category: categorizeRepo(r),
         secGroup: getSecGroup(r),
+        secOrder: getSecOrder(r),
       }))
       .filter((r) => r.category !== 'other')
       .sort((a, b) => {
