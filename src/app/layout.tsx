@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider';
 import { AnimationProvider } from '@/components/providers/AnimationProvider';
 import './globals.css';
@@ -78,6 +79,7 @@ export default function RootLayout({
         <SmoothScrollProvider>
           <AnimationProvider>{children}</AnimationProvider>
         </SmoothScrollProvider>
+        <Analytics />
       </body>
     </html>
   );
