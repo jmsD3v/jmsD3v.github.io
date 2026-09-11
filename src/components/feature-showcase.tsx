@@ -22,7 +22,6 @@ export function FeatureShowcase({
   steps = [],
   tabs,
   defaultTab,
-  panelMinHeight = 420,
   className,
   ctaPrimary,
   ctaSecondary,

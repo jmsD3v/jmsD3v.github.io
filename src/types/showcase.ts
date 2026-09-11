@@ -19,7 +19,6 @@ export interface FeatureShowcaseProps {
   steps?: ShowcaseStep[]
   tabs: TabMedia[]
   defaultTab?: string
-  panelMinHeight?: number
   className?: string
   ctaPrimary?: { label: string; href: string }
   ctaSecondary?: { label: string; href: string }
