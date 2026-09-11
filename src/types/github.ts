@@ -10,6 +10,7 @@ export interface GitHubRepo {
   forks_count: number
   topics: string[]
   visibility: string
+  private: boolean
   updated_at: string
   created_at: string
 }

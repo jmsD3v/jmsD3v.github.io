@@ -29,6 +29,10 @@ export async function ProjectsSection() {
   try {
     const repos = await getRepos()
     projects = repos
+      // Never show private repos — a visitor without access just gets a 404,
+      // and some are private for reasons beyond code cleanliness (client work,
+      // academic pacing, teammate-shared decisions).
+      .filter((r) => !r.private)
       .filter((r) => !EXCLUDED_REPOS.has(r.name))
       .map((r) => ({
         id: r.id,
