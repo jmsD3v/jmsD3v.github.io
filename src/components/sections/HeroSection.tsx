@@ -72,9 +72,10 @@ class TextScramble {
 
 const PHRASES = [
   'JUAN MANUEL SILVA',
-  'FULL STACK & PYTHON DEV',
+  'ANALISTA EN CIBERSEGURIDAD',
+  'FULL STACK & PYTHON SECURITY DEV',
   'AI ENGINEER',
-  'CIBERSEGURIDAD',
+  'INDUSTRIA 4.0',
   'AUTOMATIZACIONES A MEDIDA',
   'SOLUCIONES QUE ESCALAN',
   'DE LAS BREÑAS AL MUNDO',
@@ -230,7 +231,7 @@ export function HeroSection() {
       <div className='relative z-20 flex flex-col items-center gap-4 w-full max-w-4xl px-4'>
         <ScrambledTitle />
         <p className='text-text-muted text-xs sm:text-sm md:text-base tracking-wide md:tracking-widest font-mono text-center'>
-          Full Stack & Python Dev · AI Engineer · Ciberseguridad
+          Analista en Ciberseguridad · Full Stack & Python Security Dev · AI Engineer · Industria 4.0
         </p>
         <div className='flex gap-2 items-center text-accent mt-2'>
           <span className='w-2 h-2 rounded-full bg-accent animate-pulse' />

@@ -106,16 +106,18 @@ const FORENSICS_SKILLS = [
 
 const COLLAB = {
   org: 'ArgOS',
-  role: 'Colaborador (voluntario)',
+  role: 'Python Security Developer',
+  workMode: 'Autónomo · Argentina, remoto',
   period: 'ago. 2025 – presente',
   meta: 'El primer sistema operativo de ciberinteligencia y OSINT de Argentina',
   intro:
-    'argOS es una distribución Linux/Debian especializada en ciberinteligencia y OSINT, con herramientas propias integradas y un equipo abierto de colaboradores. Aporto como voluntario en dos de sus herramientas:',
+    'argOS es una distribución Linux/Debian especializada en ciberinteligencia y OSINT, con herramientas propias integradas y un equipo abierto de colaboradores.',
   bullets: [
-    'Reescritura de ShodArgOS: mejora del parseo y presentación de resultados de Shodan, exponiendo vulnerabilidades/CVEs que antes se ignoraban por completo; historial de sesión y exportación a PDF.',
-    'Reescritura de Imargos: extracción completa de metadata EXIF y geolocalización inversa (Nominatim) incluso sin coordenadas GPS previas; búsqueda de Street View histórico; informes PDF de sesión completa.',
-    'Investigación e implementación de protección de código fuente para distribución (Cython + Nuitka) en ambas herramientas.',
-    'Buenas prácticas de seguridad aplicadas: almacenamiento cifrado (Fernet) de credenciales de API y renderizado seguro de datos no confiables de terceros.',
+    'Auditoría técnica y refactorización segura de herramientas Python del SO ArgOS.',
+    'Identificación y corrección de vulnerabilidades; mejoras de arquitectura y calidad de código.',
+    'Implementación de hardening anti-reversing y protección de lógica interna.',
+    'Rediseño de interfaces front-end: minimalistas, usables y orientadas a productividad.',
+    'Contribución al Release 3, presentado en Ekoparty 2026.',
   ],
 };
 
@@ -504,6 +506,9 @@ export function HackerSection() {
                       {COLLAB.period}
                     </span>
                   </div>
+                  <p className='font-mono text-xs text-text-muted mb-2'>
+                    {COLLAB.workMode}
+                  </p>
                   <p className='font-mono text-xs font-bold text-text-muted mb-2'>
                     {COLLAB.meta}
                   </p>
