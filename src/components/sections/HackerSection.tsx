@@ -109,7 +109,29 @@ const FLAGSHIP = {
   name: 'ai-agent-security-lab',
   href: 'https://github.com/jmsD3v/ai-agent-security-lab',
   tagline:
-    'Red/blue team lab para seguridad de agentes de IA — arquitectura de 5 capas de defensa, 500+ payloads de ataque, mapeado a OWASP LLM Top 10 y MITRE ATLAS.',
+    'Laboratorio red/blue team para seguridad de agentes de IA con acceso a herramientas (archivos, APIs, ejecución de código, memoria). Simula ataques reales y mide qué tan bien aguanta la defensa — sin inventar amenazas, mapeado 1 a 1 contra OWASP LLM Top 10 y MITRE ATLAS.',
+  highlights: [
+    {
+      label: 'Ataque',
+      detail:
+        '6 módulos — prompt injection multilingüe, abuso de herramientas (path traversal, SSRF), envenenamiento de memoria, ingeniería social, supply chain, multimodal (EXIF/PDF/audio)',
+    },
+    {
+      label: 'Defensa',
+      detail:
+        '5 capas en cascada — clasificador semántico de intención, guardrails de input/output, policy engine, sanitización de contenido (RAG + PII)',
+    },
+    {
+      label: 'Honestidad',
+      detail:
+        'Documenta lo que NO bloquea todavía (encoding hex/base64, homoglifos) en vez de vender 100% de cobertura',
+    },
+    {
+      label: 'Producción real',
+      detail:
+        'Imagen publicada en Docker Hub, CI en GitHub Actions, soporta Claude/OpenAI/Ollama indistintamente',
+    },
+  ],
   stats: [
     { value: '397', label: 'tests pasando' },
     { value: '500+', label: 'payloads de ataque' },
@@ -411,9 +433,24 @@ export function HackerSection() {
               </h3>
               <span className='font-mono text-xs text-text-muted'>↗ ver repo</span>
             </div>
-            <p className='font-mono text-sm text-text-muted max-w-2xl mb-6'>
+            <p className='font-mono text-sm text-text-muted max-w-3xl mb-6'>
               {FLAGSHIP.tagline}
             </p>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 mb-7'>
+              {FLAGSHIP.highlights.map((h) => (
+                <div key={h.label} className='flex gap-2'>
+                  <span
+                    className='shrink-0 font-mono text-xs font-bold'
+                    style={{ color: SEC.flagship.hex }}
+                  >
+                    {h.label}:
+                  </span>
+                  <span className='font-mono text-xs text-text-muted leading-relaxed'>
+                    {h.detail}
+                  </span>
+                </div>
+              ))}
+            </div>
             <div className='grid grid-cols-2 sm:grid-cols-4 gap-4'>
               {FLAGSHIP.stats.map((s) => (
                 <div key={s.label}>
