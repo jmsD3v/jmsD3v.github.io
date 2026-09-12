@@ -22,6 +22,7 @@ const SEC = {
   defensive: { hex: '#22d3ee', bg: 'rgba(34,211,238,0.05)' },
   forensics: { hex: '#c084fc', bg: 'rgba(192,132,252,0.05)' },
   collab: { hex: '#22c55e', bg: 'rgba(34,197,94,0.05)' },
+  flagship: { hex: '#f5b942', bg: 'rgba(245,185,66,0.06)' },
 } as const;
 
 type SecKey = keyof typeof SEC;
@@ -103,6 +104,19 @@ const FORENSICS_SKILLS = [
     ],
   },
 ];
+
+const FLAGSHIP = {
+  name: 'ai-agent-security-lab',
+  href: 'https://github.com/jmsD3v/ai-agent-security-lab',
+  tagline:
+    'Red/blue team lab para seguridad de agentes de IA — arquitectura de 5 capas de defensa, 500+ payloads de ataque, mapeado a OWASP LLM Top 10 y MITRE ATLAS.',
+  stats: [
+    { value: '397', label: 'tests pasando' },
+    { value: '500+', label: 'payloads de ataque' },
+    { value: '5', label: 'capas de defensa' },
+    { value: '161', label: 'pulls en Docker Hub' },
+  ],
+};
 
 const COLLAB = {
   org: 'ArgOS',
@@ -367,6 +381,55 @@ export function HackerSection() {
             Formación activa en ciberseguridad ofensiva, defensiva y análisis
             forense digital.
           </p>
+        </div>
+
+        {/* ── FLAGSHIP PROJECT ── */}
+        <div className='container mx-auto max-w-7xl px-6 pb-12'>
+          <m.a
+            href={FLAGSHIP.href}
+            target='_blank'
+            rel='noopener noreferrer'
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className='block border rounded-lg p-6 md:p-8 transition-colors duration-200'
+            style={{
+              backgroundColor: SEC.flagship.bg,
+              borderColor: SEC.flagship.hex + '40',
+            }}
+          >
+            <div className='flex flex-wrap items-center gap-3 mb-3'>
+              <span
+                className='font-mono text-[10px] tracking-widest uppercase px-2 py-1 rounded border'
+                style={{ color: SEC.flagship.hex, borderColor: SEC.flagship.hex + '70' }}
+              >
+                Proyecto insignia
+              </span>
+              <h3 className='font-mono text-xl font-bold text-text'>
+                {FLAGSHIP.name}
+              </h3>
+              <span className='font-mono text-xs text-text-muted'>↗ ver repo</span>
+            </div>
+            <p className='font-mono text-sm text-text-muted max-w-2xl mb-6'>
+              {FLAGSHIP.tagline}
+            </p>
+            <div className='grid grid-cols-2 sm:grid-cols-4 gap-4'>
+              {FLAGSHIP.stats.map((s) => (
+                <div key={s.label}>
+                  <p
+                    className='font-mono text-2xl font-bold'
+                    style={{ color: SEC.flagship.hex }}
+                  >
+                    {s.value}
+                  </p>
+                  <p className='font-mono text-[11px] text-text-muted uppercase tracking-wide'>
+                    {s.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </m.a>
         </div>
 
         {/* ── RED TEAM ── */}
