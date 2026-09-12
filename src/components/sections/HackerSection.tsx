@@ -2,6 +2,7 @@
 'use client';
 
 import { m } from 'framer-motion';
+import Image from 'next/image';
 import { TerminalText } from '@/components/ui/TerminalText';
 import { Button } from '@/components/ui/button';
 import { VerticalCarousel } from '@/components/ui/VerticalCarousel';
@@ -106,8 +107,10 @@ const FORENSICS_SKILLS = [
 const COLLAB = {
   org: 'ArgOS',
   role: 'Colaborador (voluntario)',
-  period: '2026 – presente',
-  meta: 'Proyecto de ciberinteligencia y OSINT de código abierto',
+  period: 'ago. 2025 – presente',
+  meta: 'El primer sistema operativo de ciberinteligencia y OSINT de Argentina',
+  intro:
+    'argOS es una distribución Linux/Debian especializada en ciberinteligencia y OSINT, con herramientas propias integradas y un equipo abierto de colaboradores. Aporto como voluntario en dos de sus herramientas:',
   bullets: [
     'Reescritura de ShodArgOS: mejora del parseo y presentación de resultados de Shodan, exponiendo vulnerabilidades/CVEs que antes se ignoraban por completo; historial de sesión y exportación a PDF.',
     'Reescritura de Imargos: extracción completa de metadata EXIF y geolocalización inversa (Nominatim) incluso sin coordenadas GPS previas; búsqueda de Street View histórico; informes PDF de sesión completa.',
@@ -472,36 +475,59 @@ export function HackerSection() {
                 (e.currentTarget as HTMLDivElement).style.borderColor = '';
               }}
             >
-              <div className='flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-1'>
-                <h3 className='font-mono text-sm font-bold text-text'>
-                  {COLLAB.org} — {COLLAB.role}
-                </h3>
-                <span
-                  className='font-mono text-xs shrink-0'
-                  style={{ color: SEC.collab.hex }}
+              <div className='flex flex-col gap-4 md:flex-row md:items-start'>
+                <a
+                  href='https://argoscyberintel.com'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='block w-full shrink-0 overflow-hidden rounded-md border border-surface md:w-52'
+                  title='Ver el sitio oficial de argOS'
                 >
-                  {COLLAB.period}
-                </span>
-              </div>
-              <p className='font-mono text-xs text-text-muted italic mb-3'>
-                {COLLAB.meta}
-              </p>
-              <ul className='space-y-1.5'>
-                {COLLAB.bullets.map((b) => (
-                  <li
-                    key={b}
-                    className='font-mono text-xs text-text-muted flex gap-2'
-                  >
+                  <Image
+                    src='/argos/argos-home.webp'
+                    alt='argOS Project — sistema operativo de ciberinteligencia y OSINT'
+                    width={1280}
+                    height={820}
+                    className='h-auto w-full object-cover'
+                  />
+                </a>
+
+                <div className='min-w-0 flex-1'>
+                  <div className='flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-1'>
+                    <h3 className='font-mono text-sm font-bold text-text'>
+                      {COLLAB.org} — {COLLAB.role}
+                    </h3>
                     <span
-                      className='shrink-0'
+                      className='font-mono text-xs shrink-0'
                       style={{ color: SEC.collab.hex }}
                     >
-                      ▸
+                      {COLLAB.period}
                     </span>
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
+                  </div>
+                  <p className='font-mono text-xs font-bold text-text-muted mb-2'>
+                    {COLLAB.meta}
+                  </p>
+                  <p className='font-mono text-xs text-text-muted mb-3'>
+                    {COLLAB.intro}
+                  </p>
+                  <ul className='space-y-1.5'>
+                    {COLLAB.bullets.map((b) => (
+                      <li
+                        key={b}
+                        className='font-mono text-xs text-text-muted flex gap-2'
+                      >
+                        <span
+                          className='shrink-0'
+                          style={{ color: SEC.collab.hex }}
+                        >
+                          ▸
+                        </span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
           </m.div>
         </div>
