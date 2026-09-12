@@ -47,7 +47,7 @@ Conocimientos a reforzar:
 Debe aparecer en todos los proyectos:
 
 `txt
-Copyright © 2025 Desarrollado desde Las Breñas con 💜 por @jmsDev All rights reserved
+Copyright © @jmsDev — Desarrollado desde Las Breñas con 💜 · All rights reserved
 `
 
 - @jmsDev → https://www.linkedin.com/in/jmsilva83
