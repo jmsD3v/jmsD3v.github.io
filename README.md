@@ -1,157 +1,106 @@
 <div align="center">
 
-```
- ██╗███╗   ███╗███████╗██╗██╗    ██╗   █████╗     ██████╗ ███████╗██╗   ██╗
- ██║████╗ ████║██╔════╝██║██║    ██║  ██╔══██╗    ██╔══██╗██╔════╝██║   ██║
- ██║██╔████╔██║███████╗██║██║    ██║  ███████║    ██║  ██║█████╗  ██║   ██║
- ██║██║╚██╔╝██║╚════██║██║██║    ╚═╝  ██╔══██║    ██║  ██║██╔══╝  ╚██╗ ██╔╝
- ██║██║ ╚═╝ ██║███████║██║███████╗    ██║  ██║    ██████╔╝███████╗ ╚████╔╝ 
- ╚═╝╚═╝     ╚═╝╚══════╝╚═╝╚══════╝    ╚═╝  ╚═╝    ╚═════╝ ╚══════╝  ╚═══╝  
-```
+![jms-folio](docs/portfolio-banner.svg)
 
-**Full Stack Developer · IA Engineer · Security Researcher**
-
-[![Live](https://img.shields.io/badge/Live-jmsilva.dev-00ff41?style=for-the-badge&logo=vercel&logoColor=white)](https://jmsilva.dev)
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
-[![Tailwind](https://img.shields.io/badge/Tailwind-v4-06b6d4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![Lighthouse](https://img.shields.io/badge/Lighthouse-96%2F100-orange?style=for-the-badge&logo=lighthouse&logoColor=white)](#-performance)
+[![Live](https://img.shields.io/badge/live-jmsilva.dev-e6edf3?style=flat-square&logo=vercel&logoColor=black)](https://jmsilva.dev)
+[![Next.js](https://img.shields.io/badge/Next.js-15-3b82f6?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3b82f6?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![Tailwind](https://img.shields.io/badge/Tailwind-v4-ef4444?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 
 </div>
 
----
+<br>
 
-## ✦ Overview
+Personal portfolio of **Juan Manuel Silva**, built as one app with two readings of the same person: a **dev** side (blue) and a **hacker** side (red), joined by a scroll-driven mode transition instead of a tab switcher. Single page, canvas pixel backgrounds per section, and a projects grid that pulls live from the GitHub API.
 
-Personal portfolio of **Juan Manuel Silva** — built with a dual persona: a **dev side** (blues, full stack showcase) and a **hacker side** (reds, security research). Single-page app with smooth scroll, canvas pixel animations, and certification carousels.
+<br>
 
-> Las Breñas, Chaco · Argentina
+## Stack
 
----
-
-## ✦ Stack
-
-| Layer | Tech |
+| | |
 |---|---|
 | Framework | Next.js 15 (App Router) |
-| Language | TypeScript 5 strict |
+| Language | TypeScript 5, strict |
 | Styling | Tailwind CSS v4 |
-| Animations | Framer Motion 12 + GSAP 3 |
-| Scroll | Lenis (smooth scroll) |
-| Icons | Lucide React |
+| Animation | Framer Motion 12 + GSAP 3 (never on the same element — see rules below) |
+| Scroll | Lenis |
 | Deploy | Vercel |
 
----
+<br>
 
-## ✦ Sections
+## Layout
 
 ```
-/
-├── Hero          — terminal glitch intro, dual-mode CTA
-├── About         — bio, photo, location
-├── Dev           — full stack showcase, featured certs, extra cert carousel
-│   └── DevShowcase — project cards with live / repo links
-├── ModeTransition — animated section separator
-├── Hacker        — security research, ArgOS collaboration, cert carousel (10 certs)
-├── Projects      — GitHub repo grid (fetched via API, filtered list)
-└── Contact       — social links
+Hero            terminal glitch intro, dual-mode cue
+About           bio, photo, location
+Dev             full-stack showcase, featured certs
+  DevShowcase   project cards, live + repo links
+ModeTransition  the actual pivot — dev fades out, hacker fades in
+Hacker          security research, ArgOS collaboration, cert carousel
+Projects        GitHub grid, fetched server-side, private repos always excluded
+Contact         direct links, no contact-form backend by design
 ```
 
----
+<br>
 
-## ✦ Notable Features
+## Non-negotiable rules
 
-**PixelBg** — Custom canvas animation on every section. Pixels spawn from center outward, flicker, then fade. IntersectionObserver pauses rAF off-screen. 30fps cap. Adaptive gap prevents >25 000 pixels on tall sections.
+These came from real bugs, not preference:
 
-**HorizontalCertCarousel** — Page-based cert carousel (3 per page). Stagger entry animation, `whileHover` lift, `AnimatePresence` slide on page change. Accent color injected per section (blue dev / red hacker).
+- `useGSAP()` only — never `useEffect` for GSAP. Framer Motion and GSAP never share a DOM element.
+- `SmoothScrollProvider` (Lenis) mounts before any `ScrollTrigger` runs, or the pinned transition desyncs.
+- GSAP pin/scrub is disabled on touch (`ScrollTrigger.isTouch === 1`) — it fights native scroll on mobile otherwise.
+- `gsap.matchMedia()` gates all GSAP behind a reduced-motion variant.
+- `lib/github.ts` is `server-only` — the GitHub token never reaches the client.
 
-**VerticalCarousel** — Auto-rotating featured cert showcase with dot nav and pause-on-hover.
+<br>
 
-**Dual persona** — Dev palette: blue. Hacker palette: red. Shared component tree, different `accentColor` props.
+## Security
 
----
+- Zero known dependency vulnerabilities — `pnpm audit` is clean, including two Next.js RCE advisories patched this cycle.
+- `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` set via `next.config.ts`.
+- The projects grid filters on `!repo.private` directly, not a hardcoded exclusion list — a repo going private can't leak a broken card later.
 
-## ✦ Getting Started
+<br>
+
+## Running it
 
 ```bash
-# Install (always pnpm)
 pnpm install
-
-# Dev server
-pnpm dev
-
-# Production build + serve
-pnpm exec next build
+pnpm dev                      # turbopack, dev only
+pnpm exec next build          # production build uses webpack
 pnpm exec next start
 ```
 
-> ⚠️ Always use `pnpm`. Never `npm` or `yarn`.  
-> The `--turbopack` flag in `package.json` applies to `dev` only. Production builds use webpack via `next build`.
+```env
+GITHUB_USERNAME=jmsD3v   # optional, falls back to this
+GITHUB_TOKEN=ghp_...     # optional — 60 req/hr without it, 5000 with it
+```
 
----
+<br>
 
-## ✦ Project Structure
+## Structure
 
 ```
 src/
-├── app/
-│   ├── layout.tsx        # Metadata, OG tags, canonical, Twitter card
-│   ├── page.tsx          # Section composition
-│   └── globals.css       # CSS custom properties, theme tokens
-├── components/
-│   ├── sections/         # Hero · About · Dev · Hacker · Projects · Contact
-│   └── ui/               # PixelBg · VerticalCarousel · HorizontalCertCarousel · ...
-├── lib/
-│   ├── pixel-palettes.ts # HSL color palettes per section
-│   ├── github.ts         # GitHub API fetch + server-side cache
-│   └── utils.ts          # cn(), misc helpers
-└── types/                # github.ts · projects.ts · showcase.ts · carousel.ts · about.ts · hero.ts
+  app/          layout.tsx (metadata, OG), page.tsx (section order), globals.css
+  components/
+    sections/   Hero · About · Dev · Hacker · Projects · Contact
+    ui/         PixelBg · VerticalCarousel · HorizontalCertCarousel · ...
+  lib/          github.ts (server-only fetch), pixel-palettes.ts, utils.ts
+  types/        github.ts · projects.ts · showcase.ts · carousel.ts · about.ts · hero.ts
 ```
 
----
+<br>
 
-## ✦ Performance
+## Lighthouse
 
-Lighthouse scores — production build, cold start:
+| Performance | Accessibility | Best practices | SEO |
+|:---:|:---:|:---:|:---:|
+| 96 | 100 | 100 | 100 |
 
-| Metric | Score |
-|---|:---:|
-| Performance | **96** |
-| Accessibility | **100** |
-| Best Practices | **100** |
-| SEO | **100** |
-
----
-
-## ✦ Security
-
-- Zero known dependency vulnerabilities (`pnpm audit`) — patched, including two critical Next.js RCE advisories.
-- Baseline security headers set via `next.config.ts`: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`.
-- The Projects grid filters out private repos server-side (`!r.private`), independent of any hardcoded exclusion list — a repo going private never leaks a broken card.
-
----
-
-## ✦ Environment Variables
-
-```env
-GITHUB_USERNAME=jmsD3v     # GitHub username (optional — falls back to default)
-GITHUB_TOKEN=ghp_...       # Raises API rate limit from 60 → 5000 req/hr
-```
-
----
-
-## ✦ Deploy
-
-Hosted on **Vercel** with custom domain `jmsilva.dev`.
-
-1. Import repo in Vercel dashboard
-2. Add env vars (`GITHUB_TOKEN`)
-3. Assign custom domain → `jmsilva.dev`
-
----
+<br>
 
 <div align="center">
-
-Made by **Juan Manuel Silva** · [jmsilva.dev](https://jmsilva.dev) · [@jmsD3v](https://github.com/jmsD3v)
-
+<sub>Juan Manuel Silva · <a href="https://jmsilva.dev">jmsilva.dev</a> · <a href="https://github.com/jmsD3v">@jmsD3v</a></sub>
 </div>
