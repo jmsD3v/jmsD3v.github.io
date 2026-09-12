@@ -52,7 +52,7 @@ Personal portfolio of **Juan Manuel Silva** — built with a dual persona: a **d
 ├── Dev           — full stack showcase, featured certs, extra cert carousel
 │   └── DevShowcase — project cards with live / repo links
 ├── ModeTransition — animated section separator
-├── Hacker        — security research, CTF projects, cert carousel (10 certs)
+├── Hacker        — security research, ArgOS collaboration, cert carousel (10 certs)
 ├── Projects      — GitHub repo grid (fetched via API, filtered list)
 └── Contact       — social links
 ```
@@ -105,7 +105,7 @@ src/
 │   ├── pixel-palettes.ts # HSL color palettes per section
 │   ├── github.ts         # GitHub API fetch + server-side cache
 │   └── utils.ts          # cn(), misc helpers
-└── types/                # carousel.ts · projects.ts · about.ts
+└── types/                # github.ts · projects.ts · showcase.ts · carousel.ts · about.ts · hero.ts
 ```
 
 ---
@@ -120,6 +120,14 @@ Lighthouse scores — production build, cold start:
 | Accessibility | **100** |
 | Best Practices | **100** |
 | SEO | **100** |
+
+---
+
+## ✦ Security
+
+- Zero known dependency vulnerabilities (`pnpm audit`) — patched, including two critical Next.js RCE advisories.
+- Baseline security headers set via `next.config.ts`: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`.
+- The Projects grid filters out private repos server-side (`!r.private`), independent of any hardcoded exclusion list — a repo going private never leaks a broken card.
 
 ---
 
