@@ -20,6 +20,7 @@ const SEC = {
   offensive: { hex: '#ff4444', bg: 'rgba(255,68,68,0.05)' },
   defensive: { hex: '#22d3ee', bg: 'rgba(34,211,238,0.05)' },
   forensics: { hex: '#c084fc', bg: 'rgba(192,132,252,0.05)' },
+  collab: { hex: '#22c55e', bg: 'rgba(34,197,94,0.05)' },
 } as const;
 
 type SecKey = keyof typeof SEC;
@@ -101,6 +102,19 @@ const FORENSICS_SKILLS = [
     ],
   },
 ];
+
+const COLLAB = {
+  org: 'ArgOS',
+  role: 'Colaborador (voluntario)',
+  period: '2026 – presente',
+  meta: 'Proyecto de ciberinteligencia y OSINT de código abierto',
+  bullets: [
+    'Reescritura de ShodArgOS: mejora del parseo y presentación de resultados de Shodan, exponiendo vulnerabilidades/CVEs que antes se ignoraban por completo; historial de sesión y exportación a PDF.',
+    'Reescritura de Imargos: extracción completa de metadata EXIF y geolocalización inversa (Nominatim) incluso sin coordenadas GPS previas; búsqueda de Street View histórico; informes PDF de sesión completa.',
+    'Investigación e implementación de protección de código fuente para distribución (Cython + Nuitka) en ambas herramientas.',
+    'Buenas prácticas de seguridad aplicadas: almacenamiento cifrado (Fernet) de credenciales de API y renderizado seguro de datos no confiables de terceros.',
+  ],
+};
 
 const HACKER_CERTS: CarouselItem[] = [
   {
@@ -436,6 +450,60 @@ export function HackerSection() {
               />
             ))}
           </div>
+        </div>
+
+        {/* ── COLABORACIÓN / VOLUNTARIADO ── */}
+        <div className='container mx-auto max-w-7xl px-6 pb-12'>
+          <SectionHeader label='// Colaboración — Voluntariado' sec='collab' />
+          <m.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
+            <div
+              className='border border-surface rounded-md p-5 transition-colors duration-200'
+              style={{ backgroundColor: SEC.collab.bg }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLDivElement).style.borderColor =
+                  SEC.collab.hex + '66';
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLDivElement).style.borderColor = '';
+              }}
+            >
+              <div className='flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-1'>
+                <h3 className='font-mono text-sm font-bold text-text'>
+                  {COLLAB.org} — {COLLAB.role}
+                </h3>
+                <span
+                  className='font-mono text-xs shrink-0'
+                  style={{ color: SEC.collab.hex }}
+                >
+                  {COLLAB.period}
+                </span>
+              </div>
+              <p className='font-mono text-xs text-text-muted italic mb-3'>
+                {COLLAB.meta}
+              </p>
+              <ul className='space-y-1.5'>
+                {COLLAB.bullets.map((b) => (
+                  <li
+                    key={b}
+                    className='font-mono text-xs text-text-muted flex gap-2'
+                  >
+                    <span
+                      className='shrink-0'
+                      style={{ color: SEC.collab.hex }}
+                    >
+                      ▸
+                    </span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </m.div>
         </div>
 
         {/* ── CERTIFICACIONES ── */}
