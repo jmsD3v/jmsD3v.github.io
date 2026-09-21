@@ -5,7 +5,7 @@ import { FeatureShowcase } from '@/components/feature-showcase';
 import { useProject } from '@/contexts/ProjectContext';
 import type { FeatureShowcaseProps } from '@/types/showcase';
 
-const DEFAULT: FeatureShowcaseProps = {
+const JMS_FOLIO: FeatureShowcaseProps = {
   eyebrow: 'Full Stack',
   title: 'jms-folio',
   description:
@@ -42,6 +42,64 @@ const DEFAULT: FeatureShowcaseProps = {
   },
 };
 
+// Proyecto destacado: el cruce entre 25 años de electricista, desarrollo y seguridad. El código es privado;
+// el repo público (solar-ot-lab-showcase) muestra el trabajo. Las cifras salen del proyecto real.
+const SOLAR_OT_LAB: FeatureShowcaseProps = {
+  eyebrow: 'OT · Infraestructura crítica',
+  title: 'solar-ot-lab',
+  description:
+    'Mini-SCADA de laboratorio de un parque solar de 40 MW: agentes de campo, gateway y dashboard en tiempo real. Los equipos son simulados; los protocolos, reales (Modbus TCP e IEC 60870-5-104).',
+  stats: ['SCADA', 'Modbus TCP', 'IEC 60870-5-104', 'Python', 'FastAPI', 'React', 'Docker'],
+  steps: [
+    {
+      id: 'scope',
+      title: 'Qué simula',
+      text: '150 inversores y 450 trackers en 6 bloques, estación transformadora 132/34,5 kV, controlador de planta en lazo cerrado y una estación meteorológica con días despejados, nublados y de lluvia.',
+    },
+    {
+      id: 'scada',
+      title: 'Qué hace como SCADA',
+      text: 'Adquisición por agentes de campo, HMI con drill-down planta → bloque → inversor por WebSocket, alarmas ISA-18.2, historial, comandos y consignas de planta, y secuencia de eventos con la hora del equipo en milisegundos.',
+    },
+    {
+      id: 'security',
+      title: 'Seguridad por diseño',
+      text: 'Redes segmentadas (OT / DMZ / IT), contenedores endurecidos, permisos por rol, token propio por agente y MQTT con TLS.',
+    },
+    {
+      id: 'honest',
+      title: 'Alcance, sin vueltas',
+      text: '390 tests y 8 decisiones de diseño documentadas. No es un SCADA comercial: no se probó con inversores reales ni tiene certificaciones. El código es privado; este repo muestra el proyecto.',
+    },
+  ],
+  tabs: [
+    {
+      value: 'desktop',
+      label: 'Desktop',
+      src: '/projects/solar-ot-lab-showcase-desktop.png',
+      alt: 'solar-ot-lab: vista general del parque en escritorio',
+    },
+    {
+      value: 'mobile',
+      label: 'Mobile',
+      src: '/projects/solar-ot-lab-showcase-mobile.jpg',
+      alt: 'solar-ot-lab: el dashboard en el celular',
+    },
+  ],
+  ctaPrimary: {
+    label: 'Ver el proyecto',
+    href: 'https://github.com/jmsD3v/solar-ot-lab-showcase',
+  },
+};
+
+const DEFAULT: FeatureShowcaseProps = SOLAR_OT_LAB;
+
+// Repos con una ficha escrita a mano (el resto se arma solo desde la API de GitHub).
+const PROJECT_OVERRIDES: Record<string, FeatureShowcaseProps> = {
+  'solar-ot-lab-showcase': SOLAR_OT_LAB,
+  'jms-folio': JMS_FOLIO,
+};
+
 const PROJECT_PREVIEW_TABS: Record<string, FeatureShowcaseProps['tabs']> = {
   tecnoinstalador: [
     {
@@ -63,6 +121,9 @@ function repoToShowcase(
   p: ReturnType<typeof useProject>['selected'],
 ): FeatureShowcaseProps {
   if (!p) return DEFAULT;
+
+  const override = PROJECT_OVERRIDES[p.name.toLowerCase()];
+  if (override) return override;
 
   const repoKey = p.name.toLowerCase();
   const tabs = PROJECT_PREVIEW_TABS[repoKey] ?? [
