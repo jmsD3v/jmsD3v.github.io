@@ -5,6 +5,20 @@ import { FeatureShowcase } from '@/components/feature-showcase';
 import { useProject } from '@/contexts/ProjectContext';
 import type { FeatureShowcaseProps } from '@/types/showcase';
 
+const GITHUB_OWNER = 'jmsD3v';
+
+// Repos con una vista previa guardada en /public/projects/<repo>.png (la tarjeta que GitHub genera para cada
+// repo, descargada una vez: cargan rápido y no dependen de un servicio externo). Cualquier repo nuevo que no
+// esté acá usa la tarjeta de GitHub en vivo, así nunca queda una imagen rota.
+const STATIC_PREVIEWS = new Set(
+  [
+    'booked-easy', 'rapidito-pedidos', 'racket-rally-zone', 'stock-pro-guru', 'pocket-finances', 'argos-landing',
+    'CvMaker', 'Phone-Store-Landing', 'hexa-gestion', 'PyMp3', 'HEXA-LandingPage', 'cyberpyme',
+    'ai-agent-security-lab', 'pcapforge', 'malwarescope', 'dfirauto', 'honeygrid', 'threatfeed', 'soclite',
+    'phishsim', 'webhunter', 'reconai',
+  ].map((n) => n.toLowerCase()),
+);
+
 const JMS_FOLIO: FeatureShowcaseProps = {
   eyebrow: 'Full Stack',
   title: 'jms-folio',
@@ -126,12 +140,15 @@ function repoToShowcase(
   if (override) return override;
 
   const repoKey = p.name.toLowerCase();
+  // Sin capturas propias, la vista previa es la tarjeta que GitHub genera para cada repo público (ver STATIC_PREVIEWS).
   const tabs = PROJECT_PREVIEW_TABS[repoKey] ?? [
     {
       value: 'preview',
       label: 'Preview',
-      src: `/projects/${p.name}.png`,
-      alt: p.name,
+      src: STATIC_PREVIEWS.has(repoKey)
+        ? `/projects/${p.name}.png`
+        : `https://opengraph.githubassets.com/1/${GITHUB_OWNER}/${p.name}`,
+      alt: `${p.name}: vista previa del repositorio en GitHub`,
     },
   ];
 

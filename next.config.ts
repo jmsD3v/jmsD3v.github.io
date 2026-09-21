@@ -3,6 +3,10 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  images: {
+    // Tarjetas de vista previa que GitHub genera para cada repo (respaldo cuando no hay capturas propias).
+    remotePatterns: [{ protocol: 'https', hostname: 'opengraph.githubassets.com', pathname: '/**' }],
+  },
   turbopack: {
     root: path.resolve(__dirname),
   },
