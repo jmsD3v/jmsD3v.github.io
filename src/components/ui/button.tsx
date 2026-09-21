@@ -22,12 +22,22 @@ export function Button({ className, variant = 'primary', size = 'md', href, chil
 
   if (href) {
     const isExternal = href.startsWith('http')
+    // Un archivo (p. ej. el PDF del CV) no es una ruta de la app: con <Link>, Next intentaba precargarlo como
+    // página y el navegador registraba un 404 en cada visita. Se muestra como un enlace común.
+    const isFile = /\.[a-z0-9]{2,5}$/i.test(href.split('?')[0])
+    if (isExternal || isFile) {
+      return (
+        <a
+          href={href}
+          className={base}
+          {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        >
+          {children}
+        </a>
+      )
+    }
     return (
-      <Link
-        href={href}
-        className={base}
-        {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      >
+      <Link href={href} className={base}>
         {children}
       </Link>
     )

@@ -112,6 +112,7 @@ export function FeatureShowcase({
                           src={t.src}
                           alt={t.alt ?? t.label}
                           fill
+                          sizes='(min-width: 768px) 50vw, 100vw'
                           className={cn(
                             'bg-surface/60',
                             isMobileShot
@@ -127,7 +128,7 @@ export function FeatureShowcase({
               </div>
 
               {tabs.length > 1 && (
-                <div className='pointer-events-auto absolute inset-x-0 bottom-4 z-10 flex w-full justify-center'>
+                <div className='pointer-events-auto absolute inset-x-0 bottom-2 z-10 flex w-full origin-bottom scale-[0.8] justify-center md:bottom-4 md:scale-100'>
                   <TabsList>
                     {tabs.map((t) => (
                       <TabsTrigger key={t.value} value={t.value}>
