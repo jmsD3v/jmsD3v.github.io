@@ -62,7 +62,7 @@ const SOLAR_OT_LAB: FeatureShowcaseProps = {
   eyebrow: 'OT · Infraestructura crítica',
   title: 'solar-ot-lab',
   description:
-    'Mini-SCADA de laboratorio de un parque solar de 40 MW: agentes de campo, gateway y dashboard en tiempo real. Los equipos son simulados; los protocolos, reales (Modbus TCP e IEC 60870-5-104).',
+    'Mini-SCADA de laboratorio de un parque solar de 40 MW, inspirado en La Corzuela (Pinedo, Chaco): agentes de campo, gateway y dashboard en tiempo real. Los equipos son simulados; los protocolos, reales (Modbus TCP e IEC 60870-5-104).',
   stats: ['SCADA', 'Modbus TCP', 'IEC 60870-5-104', 'Python', 'FastAPI', 'React', 'Docker'],
   steps: [
     {
