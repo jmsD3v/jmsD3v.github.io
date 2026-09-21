@@ -66,6 +66,11 @@ const SOLAR_OT_LAB: FeatureShowcaseProps = {
   stats: ['SCADA', 'Modbus TCP', 'IEC 60870-5-104', 'Python', 'FastAPI', 'React', 'Docker'],
   steps: [
     {
+      id: 'field',
+      title: 'Del campo al código',
+      text: 'Lo hizo un Oficial Eléctrico especializado que supervisó el tendido eléctrico, la fibra óptica y la puesta en marcha del parque solar La Corzuela (Pinedo, Chaco, Argentina), desde el día cero hasta la inyección a la red, y midió cada variable en campo. Después lo llevó al software, con seguridad desde el diseño.',
+    },
+    {
       id: 'scope',
       title: 'Qué simula',
       text: '150 inversores y 450 trackers en 6 bloques, estación transformadora 132/34,5 kV, controlador de planta en lazo cerrado y una estación meteorológica con días despejados, nublados y de lluvia.',
