@@ -43,3 +43,6 @@ next-env.d.ts
 !.yarn/releases
 !.yarn/versions
 .pnpm-debug.log*
+
+.vercel
+.env*
