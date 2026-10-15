@@ -17,6 +17,7 @@ const WHATSAPP = 'https://wa.me/5493625455529';
 const LINKEDIN = 'https://www.linkedin.com/in/jmsilva83';
 const GITHUB = 'https://github.com/jmsD3v';
 const CV_PATH = '/cv/juan-manuel-silva-cv.pdf';
+const CV_EN_PATH = '/cv/juan-manuel-silva-cv-en.pdf';
 
 const CONTACT_LINKS = [
   {
@@ -103,9 +104,14 @@ export function ContactSection() {
           <p className='font-mono text-xs text-text-muted tracking-widest uppercase'>
             // Curriculum Vitae
           </p>
-          <Button href={CV_PATH} variant='primary' size='lg'>
-            Descargar CV →
-          </Button>
+          <div className='flex flex-wrap justify-center gap-3'>
+            <Button href={CV_PATH} variant='primary' size='lg'>
+              Descargar CV →
+            </Button>
+            <Button href={CV_EN_PATH} variant='secondary' size='lg'>
+              Download CV (English) →
+            </Button>
+          </div>
         </m.div>
       </div>{/* end z-10 */}
     </section>
