@@ -46,3 +46,17 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# --- Base de seguridad e higiene (2026-10) ---
+!.env.example
+!.env.*.example
+!.env.sample
+!.env.template
+*.log
+logs/
+*.key
+*.p12
+*.pfx
+.pnpm-store/
+dist/
+pnpm-debug.log*
