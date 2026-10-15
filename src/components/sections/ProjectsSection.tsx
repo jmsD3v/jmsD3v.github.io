@@ -19,6 +19,7 @@ const EXCLUDED_REPOS = new Set([
   'jmsD3v.github.io',
   'curso_node-RED',
   'tron-ares-theme',
+  'cyberpyme',
 ])
 
 export async function ProjectsSection() {
