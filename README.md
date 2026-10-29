@@ -41,6 +41,10 @@ Projects        GitHub grid, fetched server-side, private repos always excluded
 Contact         direct links, no contact-form backend by design
 ```
 
+Case studies live on their own static pages under `/casos/<slug>`, linked from a card in the Hacker section:
+
+- [`/casos/arquitectura-nube`](https://jmsilva.dev/casos/arquitectura-nube): secure cloud data architecture on AWS (academic project, TECLAB 2026), with the full plan and its four parts as downloadable PDFs in `public/pdf/`.
+
 <br>
 
 ## Non-negotiable rules
@@ -84,6 +88,7 @@ GITHUB_TOKEN=ghp_...     # optional — 60 req/hr without it, 5000 with it
 ```
 src/
   app/          layout.tsx (metadata, OG), page.tsx (section order), globals.css
+    casos/<slug>/  page.tsx · content.ts · opengraph-image.tsx (one folder per case study)
   components/
     sections/   Hero · About · Dev · Hacker · Projects · Contact
     ui/         PixelBg · VerticalCarousel · HorizontalCertCarousel · ...

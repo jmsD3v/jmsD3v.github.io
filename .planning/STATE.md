@@ -1,7 +1,15 @@
 # STATE — jms-folio
 
-**Last updated:** 2026-05-06
-**Session:** Portfolio completo — deployado en Vercel, repo en GitHub, animaciones, carouseles, fixes móvil.
+**Last updated:** 2026-10-29
+**Session:** Caso de estudio de arquitectura segura en la nube (rama `feat/caso-estudio-cloud`, sin mergear).
+
+---
+
+## Novedades desde 2026-05
+
+- **2026-10-15/16:** Next 16.4.2, framer-motion 14, TypeScript 6 (ESLint queda en 9 y TS en 6 hasta que typescript-eslint y eslint-plugin-react los soporten). cyberpyme excluido de la grilla. Vercel despliega solo desde `main`; GitHub Pages redirige a jmsilva.dev.
+- **2026-10-29:** primera página de caso de estudio, `/casos/arquitectura-nube` (ver ADR-001 en `docs/ARCHITECTURE.md`): contenido tipado en `content.ts`, diagrama SVG, tabla de riesgos, 5 PDFs en `public/pdf/`, imagen OG con `next/og`, tarjeta de entrada en la sección Hacker y footer compartido (`SiteFooter`). Arreglos de paso: Lenis con `anchors: true`, `overflow-x: clip` en html/body (con `hidden` no funcionaba ningún sticky) y se sacó la meta description duplicada del layout.
+- **Pendiente:** revisar la tarjeta y la página en producción después del merge; la imagen OG usa la tipografía por defecto de `next/og` (espaciado algo desparejo).
 
 ---
 
@@ -163,4 +171,4 @@ Landing-Diversos-JS-PF, jmsD3v, jmsD3v.github.io, curso_node-RED, tron-ares-them
 
 ---
 
-*Last updated: 2026-05-06*
+*Last updated: 2026-10-29*

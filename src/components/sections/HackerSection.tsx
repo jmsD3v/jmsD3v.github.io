@@ -3,6 +3,8 @@
 
 import { m } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
+import { CASO_NUBE } from '@/app/casos/arquitectura-nube/content';
 import { TerminalText } from '@/components/ui/TerminalText';
 import { Button } from '@/components/ui/button';
 import { VerticalCarousel } from '@/components/ui/VerticalCarousel';
@@ -23,6 +25,7 @@ const SEC = {
   forensics: { hex: '#c084fc', bg: 'rgba(192,132,252,0.05)' },
   collab: { hex: '#22c55e', bg: 'rgba(34,197,94,0.05)' },
   flagship: { hex: '#f5b942', bg: 'rgba(245,185,66,0.06)' },
+  caso: { hex: '#c084fc', bg: 'rgba(192,132,252,0.06)' },
 } as const;
 
 type SecKey = keyof typeof SEC;
@@ -467,6 +470,65 @@ export function HackerSection() {
               ))}
             </div>
           </m.a>
+        </div>
+
+        {/* ── CASO DE ESTUDIO ── */}
+        <div className='container mx-auto max-w-7xl px-6 pb-12'>
+          <m.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
+            <Link
+              href={`/casos/${CASO_NUBE.slug}`}
+              className='block border rounded-lg p-6 md:p-8 transition-colors duration-200 hover:brightness-125'
+              style={{
+                backgroundColor: SEC.caso.bg,
+                borderColor: SEC.caso.hex + '40',
+              }}
+            >
+              <div className='flex flex-wrap items-center gap-3 mb-3'>
+                <span
+                  className='font-mono text-[10px] tracking-widest uppercase px-2 py-1 rounded border'
+                  style={{ color: SEC.caso.hex, borderColor: SEC.caso.hex + '70' }}
+                >
+                  Caso de estudio · Cloud Security
+                </span>
+                <span className='font-mono text-xs text-text-muted'>→ ver caso completo</span>
+              </div>
+              <h3 className='font-mono text-xl font-bold text-text max-w-3xl'>
+                {CASO_NUBE.title}
+              </h3>
+              <p className='mt-3 font-mono text-sm text-text-muted max-w-3xl'>
+                {CASO_NUBE.description}
+              </p>
+              <ul className='mt-5 flex flex-wrap gap-2'>
+                {CASO_NUBE.chips.map((c) => (
+                  <li
+                    key={c}
+                    className='font-mono text-[11px] px-2 py-1 rounded border text-text'
+                    style={{ borderColor: SEC.caso.hex + '50' }}
+                  >
+                    {c}
+                  </li>
+                ))}
+              </ul>
+              <div className='mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4'>
+                {CASO_NUBE.results.stats.map((s) => (
+                  <div key={s.label}>
+                    <p className='font-mono text-2xl font-bold' style={{ color: SEC.caso.hex }}>
+                      {s.value}
+                    </p>
+                    <p className='font-mono text-[11px] text-text-muted uppercase tracking-wide'>
+                      {s.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <p className='mt-6 font-mono text-[11px] text-text-muted'>Proyecto académico · TECLAB</p>
+            </Link>
+          </m.div>
         </div>
 
         {/* ── RED TEAM ── */}

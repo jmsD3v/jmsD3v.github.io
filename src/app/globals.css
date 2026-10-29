@@ -35,7 +35,9 @@
   }
 
   html {
-    overflow-x: hidden;
+    /* clip (no hidden): recorta el desborde horizontal sin crear un contenedor
+       de scroll, así position: sticky sigue funcionando. */
+    overflow-x: clip;
     /* Smooth scroll fallback for non-Lenis contexts */
     scroll-behavior: auto;
   }
@@ -44,7 +46,7 @@
     background-color: var(--color-bg);
     color: var(--color-text);
     font-family: var(--font-mono);
-    overflow-x: hidden;
+    overflow-x: clip;
     /* Prevent layout shift from scrollbar appearing/disappearing (desktop only) */
     scrollbar-gutter: stable;
     /* Subpixel antialiasing — improves text on dark backgrounds */

@@ -11,7 +11,10 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
   const lenisRef = useRef<Lenis | null>(null)
 
   useEffect(() => {
-    const lenis = new Lenis()
+    // anchors: sin esto Lenis anula los links a #id (índice del caso de estudio).
+    // Lenis respeta el scroll-margin-top de cada sección (scroll-mt-16), que deja
+    // lugar a la barra de índice sticky.
+    const lenis = new Lenis({ anchors: true })
     lenisRef.current = lenis
 
     gsap.ticker.lagSmoothing(0)

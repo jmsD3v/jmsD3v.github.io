@@ -68,12 +68,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang='es' suppressHydrationWarning>
-      <head>
-        <meta
-          name='description'
-          content='Portfolio de Juan Manuel Silva. Full Stack Developer, IA Engineer y estudiante de Ciberseguridad desde Las Breñas, Chaco, Argentina.'
-        />
-      </head>
       <body>
         <SmoothScrollProvider>
           <AnimationProvider>{children}</AnimationProvider>
