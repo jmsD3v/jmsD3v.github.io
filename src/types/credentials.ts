@@ -5,8 +5,6 @@ export interface CredlyBadge {
   issuer: string
   /** Fecha de emisión ya formateada, p. ej. "nov. 2025". */
   issued: string
-  /** Fecha de vencimiento ya formateada; se muestra solo si el badge venció. */
-  expired?: string
   imageSrc: string
   url: string
 }

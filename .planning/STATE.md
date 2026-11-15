@@ -10,6 +10,7 @@
 - **2026-10-15/16:** Next 16.4.2, framer-motion 14, TypeScript 6 (ESLint queda en 9 y TS en 6 hasta que typescript-eslint y eslint-plugin-react los soporten). cyberpyme excluido de la grilla. Vercel despliega solo desde `main`; GitHub Pages redirige a jmsilva.dev.
 - **2026-10-29:** primera página de caso de estudio, `/casos/arquitectura-nube` (ver ADR-001 en `docs/ARCHITECTURE.md`): contenido tipado en `content.ts`, diagrama SVG, tabla de riesgos, 5 PDFs en `public/pdf/`, imagen OG con `next/og`, tarjeta de entrada en la sección Hacker y footer compartido (`SiteFooter`). Arreglos de paso: Lenis con `anchors: true`, `overflow-x: clip` en html/body (con `hidden` no funcionaba ningún sticky) y se sacó la meta description duplicada del layout.
 - **2026-11-15:** badges de Credly en la sección Hacker, Diplomado en Industria 4.0 (IngeLearn) como completado con temario y link a POK, links "Verificar" en los carruseles, `robots.txt`, `sitemap.xml` y JSON-LD (ver ADR-002). Rama `claude/credly-badges-diplomado`, sin mergear.
+- **2026-11-15 (2):** botones en el hero, página 404, `/dev-swatch` eliminada, CSP, fallo de GitHub sin cachear, listas compactas en mobile y revisión de animaciones (ADR-003 y ADR-004). Misma rama.
 - **Pendiente:** revisar la tarjeta y la página en producción después del merge; la imagen OG usa la tipografía por defecto de `next/og` (espaciado algo desparejo).
 
 ---

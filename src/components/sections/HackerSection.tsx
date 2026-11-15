@@ -197,7 +197,6 @@ const CREDLY_BADGES: CredlyBadge[] = [
     name: 'OPSWAT Introduction to Critical Infrastructure Protection (ICIP)',
     issuer: 'OPSWAT',
     issued: 'sep. 2025',
-    expired: 'sep. 2026',
     imageSrc: '/badges/icip-opswat.png',
     url: CREDLY_URL('aa4e68bd-f945-4fc7-9e99-e83da0a2678a'),
   },
@@ -366,6 +365,11 @@ const HACKER_CARRERAS = [
 
 /* ── Sub-components ───────────────────────────────────────── */
 
+// En mobile las herramientas van en fila (la sección quedaba larguísima);
+// desde sm vuelven a ser una lista vertical.
+const TOOL_LIST =
+  'flex flex-wrap gap-x-4 gap-y-1.5 sm:block sm:space-y-1.5';
+
 function SectionHeader({ label, sec }: { label: string; sec: SecKey }) {
   return (
     <div
@@ -411,7 +415,7 @@ function SkillCard({ area, tools, sec, delay = 0 }: SkillCardProps) {
         <p className='font-mono text-xs mb-2' style={{ color: SEC[sec].hex }}>
           [{area}]
         </p>
-        <ul className='space-y-1.5'>
+        <ul className={TOOL_LIST}>
           {tools.map((tool) => (
             <li
               key={tool}
@@ -611,7 +615,7 @@ export function HackerSection() {
                   <h3 className='font-mono text-sm font-bold text-text mt-1 mb-3'>
                     {phase.name}
                   </h3>
-                  <ul className='space-y-1.5'>
+                  <ul className={TOOL_LIST}>
                     {phase.tools.map((tool) => (
                       <li
                         key={tool}

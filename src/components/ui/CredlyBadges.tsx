@@ -58,7 +58,7 @@ export function CredlyBadges({ badges, profileUrl }: CredlyBadgesProps) {
                 alt=""
                 width={112}
                 height={112}
-                className={`h-24 w-24 object-contain transition-transform duration-200 group-hover:scale-105 sm:h-28 sm:w-28 ${badge.expired ? 'opacity-60 grayscale' : ''}`}
+                className="h-24 w-24 object-contain transition-transform duration-200 group-hover:scale-105 sm:h-28 sm:w-28"
               />
               <div className="flex flex-1 flex-col gap-1">
                 <p className="font-mono text-xs font-bold text-text leading-snug">
@@ -68,10 +68,8 @@ export function CredlyBadges({ badges, profileUrl }: CredlyBadgesProps) {
                   {badge.issuer} · {badge.issued}
                 </p>
               </div>
-              <span
-                className={`font-mono text-[10px] tracking-widest uppercase ${badge.expired ? 'text-yellow-400' : 'text-accent'}`}
-              >
-                {badge.expired ? `Venció ${badge.expired}` : 'Verificar ↗'}
+              <span className="font-mono text-[10px] tracking-widest uppercase text-accent">
+                Verificar ↗
               </span>
             </a>
           </m.li>

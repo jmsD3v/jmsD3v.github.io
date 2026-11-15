@@ -55,6 +55,14 @@ export async function ProjectsSection() {
       })
   } catch (e) {
     console.error('GitHub fetch failed:', e)
+    // En producción, si la regeneración (ISR) lanza, Next sigue sirviendo la última
+    // página buena y reintenta en la próxima visita. Devolver una lista vacía la
+    // dejaba cacheada una hora sin proyectos. En el build y en desarrollo se sigue
+    // con la lista vacía para no cortar el trabajo.
+    const isRuntime =
+      process.env.NODE_ENV === 'production' &&
+      process.env.NEXT_PHASE !== 'phase-production-build'
+    if (isRuntime) throw e
   }
 
   return (

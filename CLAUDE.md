@@ -4,7 +4,7 @@
 
 Portfolio multi-perfil (Dev + Hacker) con animaciones de scroll intensas y proyectos auto-actualizados desde GitHub API.
 
-**Stack:** Next.js 15 App Router · TypeScript (strict) · Tailwind v4 · Framer Motion 12.38.0 · GSAP 3.15.0 + @gsap/react · Lenis 1.3.23 · tsParticles slim
+**Stack:** Next.js 16 App Router · TypeScript 6 (strict) · Tailwind v4 · Framer Motion 14 · GSAP 3.15 + @gsap/react · Lenis 1.3 (versiones exactas en `package.json`)
 
 ## GSD Workflow
 
@@ -57,31 +57,29 @@ import { LazyMotion, domAnimation, m } from 'framer-motion'
 ```
 src/
   app/
-    layout.tsx          # SmoothScrollProvider + AnimationProvider
-    page.tsx            # Server Component — GitHub fetch + section assembly
-    globals.css         # @theme palette + glitch @keyframes
+    layout.tsx          # SmoothScrollProvider + AnimationProvider + JSON-LD
+    page.tsx            # Arma las secciones
+    robots.ts · sitemap.ts
+    casos/<slug>/       # Casos de estudio (ver ADR-001)
+    globals.css         # @theme palette + @keyframes
   lib/
     github.ts           # server-only — fetch + categorize repos
-    types.ts            # GitHubRepo interface (serializable only)
+  types/                # Todos los tipos compartidos (carousel, credentials, github, ...)
   components/
-    animations/
-      variants.ts       # Framer Motion variants (fadeInFrom*, staggerContainer)
+    animations/variants.ts        # Framer Motion variants
     providers/
-      AnimationProvider.tsx   # LazyMotion + useReducedMotion
-      SmoothScrollProvider.tsx # Lenis + GSAP ticker sync
-    sections/
-      HeroSection.tsx
-      DevSection.tsx
-      HackerSection.tsx
-      ProjectsSection.tsx
-      ContactSection.tsx
-    ui/
-      ProjectCard.tsx
-      SectionDotNav.tsx
-      GlitchText.tsx
-      TerminalText.tsx
-      ParticleField.tsx
+      AnimationProvider.tsx       # LazyMotion + MotionConfig reducedMotion="user"
+      SmoothScrollProvider.tsx    # Lenis + GSAP ticker sync
+      FontsReady.tsx              # ScrollTrigger.refresh() al cargar fuentes
+    sections/                     # Hero, About, Dev, DevShowcase, Projects, ModeTransition, Hacker, Contact
+    ui/                           # PixelBg, carruseles, CredlyBadges, DiplomaHighlight, ProjectCard, SectionDotNav, TerminalText, SiteFooter
 ```
+
+## Motion — reglas de rendimiento y accesibilidad
+
+- Todo loop (`requestAnimationFrame`, `setInterval`) se pausa cuando su sección sale de pantalla o la pestaña se oculta.
+- Todo respeta `prefers-reduced-motion`: Lenis no se monta, los canvas quedan quietos, el título del hero no se mezcla.
+- Decisiones documentadas en `docs/ARCHITECTURE.md` (ADRs).
 
 ## Anti-Features — Do NOT Build
 

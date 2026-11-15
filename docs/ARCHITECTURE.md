@@ -40,7 +40,7 @@ Decisiones de arquitectura del portfolio (ADR). Cada una dice qué se decidió, 
 - `CarouselItem` suma `credentialUrl` (opcional). Si está, las tarjetas de ambos carruseles muestran "Verificar ↗".
 - El diplomado tiene bloque propio (`DiplomaHighlight`) con sus 11 módulos; los tipos nuevos viven en `src/types/credentials.ts`.
 - La lista de "Formación destacada" de la sección Dev sale del mismo arreglo que el carrusel (`DEV_CERTS`): antes eran dos listas iguales mantenidas a mano.
-- Un badge vencido se muestra en gris con su fecha de vencimiento, no se oculta.
+- Los badges se muestran todos igual, sin marca de vencimiento (decisión del 2026-11-15): el vencimiento se ve en Credly al verificar.
 - De paso: `robots.txt`, `sitemap.xml` y datos estructurados `Person` (JSON-LD) en el layout.
 
 **Consecuencias.**
@@ -51,3 +51,43 @@ Decisiones de arquitectura del portfolio (ADR). Cada una dice qué se decidió, 
 1. Bajar la imagen desde Credly a `public/badges/<nombre>.png` (340 px).
 2. Agregar la entrada al principio de `CREDLY_BADGES` con el id del badge (el de la URL pública).
 3. Si el certificado ya está en un carrusel, sumarle `credentialUrl`.
+
+## ADR-003 · Animaciones: pausar lo que no se ve y respetar "reducir movimiento"
+
+**Fecha:** 2026-11-15 · **Estado:** aceptada
+
+**Contexto.** Una revisión del código de animación encontró trabajo que nadie veía: la lluvia del hero dibujaba 60 veces por segundo aunque el visitante estuviera en el contacto; el fondo de píxeles pintaba hasta 25.000 rectángulos por cuadro en secciones de varias pantallas; el tipeo de los encabezados arrancaba al cargar la página y terminaba antes de llegar a verlo; el ticker de Lenis nunca se quitaba al desmontar. Además casi nada respetaba `prefers-reduced-motion`, y el título del hero movía el subtítulo en cada cambio de frase.
+
+**Decisión.**
+- Hero: la lluvia y la mezcla del título corren solo con el hero en pantalla y la pestaña visible. El `<h1>` tiene alto fijo y `aria-label` con el nombre.
+- `PixelBg`: limpia y dibuja solo la franja visible (más 200 px de margen).
+- `TerminalText`: empieza a escribir cuando entra en pantalla.
+- `VerticalCarousel`: no avanza solo fuera de pantalla ni con el mouse o el foco encima.
+- `SmoothScrollProvider`: se quita el ticker con la misma referencia con la que se agregó.
+- Movimiento reducido: no se monta Lenis, los canvas quedan quietos, el título no se mezcla, el tipeo aparece completo, el carrusel no avanza solo y Framer Motion usa `MotionConfig reducedMotion="user"`.
+
+**Consecuencias.**
+- Medido en el build local a 1440 px: en la sección Hacker el fondo pasa de ~743.000 a ~150.000 rectángulos por segundo (a 390 px, de ~642.000 a ~64.000); la lluvia del hero pasa de 18.000 a 0 textos por segundo cuando no está en pantalla.
+- Regla para lo que venga: todo loop nuevo se pausa fuera de pantalla y tiene variante sin movimiento.
+
+## ADR-004 · Content-Security-Policy sin nonces
+
+**Fecha:** 2026-11-15 · **Estado:** aceptada
+
+**Contexto.** El sitio mandaba las demás cabeceras de seguridad pero no CSP.
+
+**Decisión.** CSP fija desde `next.config.ts`: todo `'self'`, sin terceros, `frame-ancestors 'none'`, `object-src 'none'`. `script-src` y `style-src` llevan `'unsafe-inline'`.
+
+**Por qué no nonces.** Un nonce se genera por request, y eso obliga a renderizar cada página en el servidor en cada visita: se pierde el prerenderizado estático y el ISR de la home. Next inyecta scripts inline para hidratar, así que sin nonce hace falta `'unsafe-inline'`.
+
+**Consecuencias.**
+- La CSP no frena un script inline inyectado; sí frena cargar scripts, imágenes, fuentes o conexiones de otros dominios, y que el sitio se embeba en un iframe.
+- Cualquier servicio externo que se sume (analítica, fuentes, embeds) hay que agregarlo a la CSP o el navegador lo bloquea.
+
+## Otros cambios del 2026-11-15
+
+- `/dev-swatch` eliminada (era una página de verificación temporal).
+- `not-found.tsx`: página 404 propia con estética de terminal.
+- `ProjectsSection`: si la API de GitHub falla en producción se relanza el error para que el ISR siga sirviendo la última página buena, en vez de cachear una grilla vacía.
+- Hero con botones "Ver proyectos" y "Contacto".
+- Sección Hacker: en mobile las herramientas de cada tarjeta van en fila.
