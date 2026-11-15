@@ -8,9 +8,46 @@ import { PIXEL_PALETTES } from '@/lib/pixel-palettes';
 import { VerticalCarousel } from '@/components/ui/VerticalCarousel';
 import { HorizontalCertCarousel } from '@/components/ui/HorizontalCertCarousel';
 import { DevShowcase } from './DevShowcase';
+import { DiplomaHighlight } from '@/components/ui/DiplomaHighlight';
 import type { CarouselItem } from '@/types/carousel';
+import type { FeaturedDiploma } from '@/types/credentials';
+
+const DIPLOMA_IMAGE = '/certs/diplomado-industria-40-ingelearn.png';
+
+const DIPLOMA: FeaturedDiploma = {
+  title: 'Diplomado en Industria 4.0',
+  issuer: 'IngeLearn',
+  issued: 'nov. 2026',
+  summary:
+    'Formación integral para llevar software, datos y seguridad a la planta: de la automatización y las redes industriales a Python, la nube, la visión por computadora y la ciberseguridad industrial.',
+  credentialUrl:
+    'https://view.pok.tech/c/ed61b5ee-7eb4-4746-90f5-061747f1b95a',
+  credentialLabel: 'Verificar credencial en POK',
+  modules: [
+    { name: 'Python aplicado a la industria', detail: 'Niveles I, II y III' },
+    { name: 'Aplicaciones y análisis de datos' },
+    { name: 'Ciberseguridad Industrial', detail: 'Niveles I y II' },
+    { name: 'Virtualización y Docker' },
+    { name: 'Cloud Computing con Google Cloud' },
+    { name: 'OpenCV y reconocimiento de imágenes con IA' },
+    { name: 'Node-RED para Industria 4.0' },
+    { name: 'Introducción a la robótica', detail: 'RobotStudio ABB' },
+    { name: 'Protocolos de comunicación y redes de datos industriales' },
+    { name: 'Automatización Industrial' },
+    { name: 'Inglés Técnico', detail: 'A1, A2 y B1' },
+  ],
+};
 
 const DEV_CERTS: CarouselItem[] = [
+  {
+    id: 'il-industria-40',
+    title: DIPLOMA.title,
+    issuer: DIPLOMA.issuer,
+    period: DIPLOMA.issued,
+    status: 'Completado',
+    imageSrc: DIPLOMA_IMAGE,
+    credentialUrl: DIPLOMA.credentialUrl,
+  },
   {
     id: 'ch-fullstack',
     title: 'Full Stack Developer',
@@ -26,13 +63,6 @@ const DEV_CERTS: CarouselItem[] = [
     period: '2025',
     status: 'Completado',
     imageSrc: '/certs/python-dev-datacamp.png',
-  },
-  {
-    id: 'il-plc',
-    title: 'Diplomado Industria 4.0 - Programación PLC',
-    issuer: 'IngeLearn',
-    period: 'jun. 2025',
-    status: 'En proceso',
   },
   {
     id: 'dc-ai-engineer',
@@ -88,37 +118,6 @@ const DEV_EXTRA_CERTS: CarouselItem[] = [
   },
 ];
 
-const DEV_CARRERAS = [
-  {
-    id: 'ch-fullstack',
-    title: 'Full Stack Developer',
-    issuer: 'Coderhouse',
-    period: 'ene. 2024',
-    status: 'Completado',
-  },
-  {
-    id: 'dc-python-dev',
-    title: 'Python Developer',
-    issuer: 'DataCamp',
-    period: '2025',
-    status: 'Completado',
-  },
-  {
-    id: 'dc-ai-engineer',
-    title: 'AI Engineer for Data Scientists',
-    issuer: 'DataCamp',
-    period: 'nov. 2025',
-    status: 'Completado',
-  },
-  {
-    id: 'il-plc',
-    title: 'Diplomado Industria 4.0 - Programación PLC',
-    issuer: 'IngeLearn',
-    period: 'jun. 2025',
-    status: 'En proceso',
-  },
-];
-
 export function DevSection() {
   return (
     <section id='dev' className='relative bg-bg'>
@@ -158,9 +157,9 @@ export function DevSection() {
 
             {/* Lista estática de carreras */}
             <div className='flex flex-col gap-3'>
-              {DEV_CARRERAS.map((c) => (
+              {DEV_CERTS.map((c) => (
                 <div
-                  key={c.title}
+                  key={c.id}
                   className='border border-surface rounded-md px-4 py-3 bg-surface/20 flex items-center justify-between gap-4'
                 >
                   <div className='min-w-0'>
@@ -180,6 +179,10 @@ export function DevSection() {
               ))}
             </div>
           </m.div>
+
+          <div className='mt-8'>
+            <DiplomaHighlight diploma={DIPLOMA} />
+          </div>
         </div>
         {/* Otras certificaciones */}
         <div className='container mx-auto max-w-7xl px-6 pb-20'>

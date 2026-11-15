@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { m, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { m, AnimatePresence, useInView, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import type { CarouselItem } from '@/types/carousel';
 
@@ -27,6 +27,11 @@ export function VerticalCarousel({
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const [paused, setPaused] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(rootRef, { amount: 0.3 });
+  const reducedMotion = useReducedMotion();
+  // Avanza solo si se está viendo, sin el mouse ni el foco encima.
+  const autoplay = inView && !paused && !reducedMotion;
 
   const navigate = useCallback(
     (idx: number) => {
@@ -37,22 +42,25 @@ export function VerticalCarousel({
   );
 
   useEffect(() => {
-    if (paused) return;
+    if (!autoplay) return;
     const id = setInterval(() => {
       setDirection(1);
       setCurrent((c) => (c + 1) % items.length);
     }, autoInterval);
     return () => clearInterval(id);
-  }, [paused, items.length, autoInterval]);
+  }, [autoplay, items.length, autoInterval]);
 
   const item = items[current];
   const isInProgress = /proceso|curso|cursando/i.test(item.status);
 
   return (
     <div
+      ref={rootRef}
       className='flex gap-3'
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
     >
       {/* Card */}
       <div
@@ -105,11 +113,22 @@ export function VerticalCarousel({
             <p className='font-mono text-xs text-text-muted mt-0.5'>
               {item.issuer}
             </p>
-            <div className='flex items-center justify-between mt-2'>
+            <div className='flex items-center gap-3 mt-2'>
               {item.period && (
                 <span className='font-mono text-xs text-text-muted'>
                   {item.period}
                 </span>
+              )}
+              {item.credentialUrl && (
+                <a
+                  href={item.credentialUrl}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  aria-label={`Verificar credencial: ${item.title}`}
+                  className='font-mono text-xs text-accent hover:underline'
+                >
+                  Verificar ↗
+                </a>
               )}
               <span
                 className={`font-mono text-xs ml-auto ${

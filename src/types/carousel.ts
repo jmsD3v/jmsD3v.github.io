@@ -7,4 +7,6 @@ export interface CarouselItem {
   description?: string
   imageSrc?: string
   badgeSrc?: string
+  /** URL pública para verificar la credencial (Credly, POK, etc.). */
+  credentialUrl?: string
 }

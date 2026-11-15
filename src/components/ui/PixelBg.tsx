@@ -7,6 +7,7 @@ import { useEffect, useRef } from 'react'
 const rand = (min: number, max: number) => Math.random() * (max - min) + min
 
 const MAX_PIXELS = 25000  // allows gap=12 even on tall sections
+const VIEW_MARGIN = 200   // px dibujados por encima y por debajo de la pantalla
 
 class Pixel {
   x: number; y: number; color: string; speed: number
@@ -133,9 +134,12 @@ export function PixelBg({ colors, opacity = 0.20, gap = 12, duration = 480 }: Pi
       }
     }
 
+    // Con "reducir movimiento" el fondo queda quieto (sin píxeles titilando).
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
     const animate = () => {
       // ── Only run when section is visible ──────────────────────
-      if (!animRef.current.visible) {
+      if (!animRef.current.visible || reducedMotion) {
         animRef.current.request = null
         return
       }
@@ -153,7 +157,15 @@ export function PixelBg({ colors, opacity = 0.20, gap = 12, duration = 480 }: Pi
       if (diff < interval) return
       animation.lastTime = now - (diff % interval)
 
-      ctx.clearRect(0, 0, animation.width, animation.height)
+      // Las secciones miden varias pantallas: se limpia y se dibuja solo la franja
+      // que se ve (más un margen). Antes se pintaban hasta 25.000 píxeles por cuadro
+      // aunque casi todos estuvieran fuera de pantalla.
+      const top  = wrapper.getBoundingClientRect().top
+      const minY = Math.max(0, -top - VIEW_MARGIN)
+      const maxY = Math.min(animation.height, -top + window.innerHeight + VIEW_MARGIN)
+      if (maxY <= minY) return
+
+      ctx.clearRect(0, minY, animation.width, maxY - minY)
 
       if (animation.ticker >= animation.maxTicker)    animation.animationDirection = -1
       else if (animation.ticker <= 0)                 animation.animationDirection = 1
@@ -162,6 +174,7 @@ export function PixelBg({ colors, opacity = 0.20, gap = 12, duration = 480 }: Pi
       ctx.globalAlpha = opacity
 
       for (const pixel of animation.pixels) {
+        if (pixel.y < minY || pixel.y > maxY) continue
         if (animation.animationDirection > 0) {
           pixel.show()
         } else {

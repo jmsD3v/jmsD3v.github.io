@@ -11,19 +11,16 @@ export async function getRepos(): Promise<GitHubRepo[]> {
     ? `${GITHUB_API}/user/repos?per_page=100&sort=updated&affiliation=owner`
     : `${GITHUB_API}/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`
 
-  try {
-    const res = await fetch(url, {
-      headers: {
-        Accept: 'application/vnd.github+json',
-        ...(token && { Authorization: `Bearer ${token}` }),
-      },
-      next: { revalidate: 3600, tags: ['github-repos'] },
-    })
-    if (!res.ok) return []
-    return (await res.json()) as GitHubRepo[]
-  } catch {
-    return []
-  }
+  // Si falla, lanza: quien llama decide qué mostrar (ver ProjectsSection).
+  const res = await fetch(url, {
+    headers: {
+      Accept: 'application/vnd.github+json',
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
+    next: { revalidate: 3600, tags: ['github-repos'] },
+  })
+  if (!res.ok) throw new Error(`GitHub API respondió ${res.status}`)
+  return (await res.json()) as GitHubRepo[]
 }
 
 // ── Categorisation ────────────────────────────────────────────────────────────

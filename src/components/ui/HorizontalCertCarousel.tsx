@@ -169,6 +169,18 @@ function CertCard({ item, accentColor }: { item: CarouselItem; accentColor: stri
             {item.description}
           </p>
         )}
+        {item.credentialUrl && (
+          <a
+            href={item.credentialUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Verificar credencial: ${item.title}`}
+            className="font-mono text-[11px] mt-auto pt-2 hover:underline"
+            style={{ color: accentColor }}
+          >
+            Verificar ↗
+          </a>
+        )}
       </div>
     </m.div>
   )

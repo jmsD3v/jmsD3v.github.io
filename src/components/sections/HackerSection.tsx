@@ -15,7 +15,9 @@ import {
   staggerContainer,
   fadeInFromBottom,
 } from '@/components/animations/variants';
+import { CredlyBadges } from '@/components/ui/CredlyBadges';
 import type { CarouselItem } from '@/types/carousel';
+import type { CredlyBadge } from '@/types/credentials';
 
 /* ── Section color config ─────────────────────────────────── */
 
@@ -158,6 +160,48 @@ const COLLAB = {
   ],
 };
 
+const CREDLY_PROFILE =
+  'https://www.credly.com/users/juan-manuel-silva.be4a3ff2';
+const CREDLY_URL = (id: string) =>
+  `https://www.credly.com/badges/${id}/public_url`;
+
+// Fuente: perfil público de Credly. Al sumar un badge nuevo: bajar la imagen a
+// public/badges/ (340 px) y agregarlo acá, del más nuevo al más viejo.
+const CREDLY_BADGES: CredlyBadge[] = [
+  {
+    id: '64a143e4-43a0-4d25-b567-db8d3d6a83a7',
+    name: 'Lifelong Learning 2026',
+    issuer: 'Certiprof',
+    issued: 'nov. 2026',
+    imageSrc: '/badges/lifelong-learning-2026-certiprof.png',
+    url: CREDLY_URL('64a143e4-43a0-4d25-b567-db8d3d6a83a7'),
+  },
+  {
+    id: '10707c5c-60de-4129-9df7-6c701ff508ee',
+    name: 'Google Cybersecurity Professional Certificate V2',
+    issuer: 'Coursera',
+    issued: 'nov. 2025',
+    imageSrc: '/badges/google-cybersecurity-v2.png',
+    url: CREDLY_URL('10707c5c-60de-4129-9df7-6c701ff508ee'),
+  },
+  {
+    id: 'd6e73d9a-c1c2-4cee-85dc-e0565305fc18',
+    name: 'LFS101: Introduction to Linux',
+    issuer: 'The Linux Foundation',
+    issued: 'oct. 2025',
+    imageSrc: '/badges/lfs101-linux-foundation.png',
+    url: CREDLY_URL('d6e73d9a-c1c2-4cee-85dc-e0565305fc18'),
+  },
+  {
+    id: 'aa4e68bd-f945-4fc7-9e99-e83da0a2678a',
+    name: 'OPSWAT Introduction to Critical Infrastructure Protection (ICIP)',
+    issuer: 'OPSWAT',
+    issued: 'sep. 2025',
+    imageSrc: '/badges/icip-opswat.png',
+    url: CREDLY_URL('aa4e68bd-f945-4fc7-9e99-e83da0a2678a'),
+  },
+];
+
 const HACKER_CERTS: CarouselItem[] = [
   {
     id: 'google-cyber-v2',
@@ -166,6 +210,7 @@ const HACKER_CERTS: CarouselItem[] = [
     period: 'nov. 2025',
     status: 'Completado',
     imageSrc: '/certs/google-cybersecurity.png',
+    credentialUrl: CREDLY_URL('10707c5c-60de-4129-9df7-6c701ff508ee'),
   },
   {
     id: 'teclab-ts-seguridad',
@@ -263,11 +308,12 @@ const HACKER_EXTRA_CERTS: CarouselItem[] = [
     id: 'ICIP',
     title: 'Introduction to Critical Infrastructure Protection',
     issuer: 'OPSWAT',
-    period: 'sep 2026',
+    period: 'sep 2025',
     status: 'Completado',
     description:
       'Protección de infraestructuras críticas, evaluación de riesgos, estrategias de mitigación y respuesta a incidentes en entornos industriales.',
     imageSrc: '/certs/icip-opswat.png',
+    credentialUrl: CREDLY_URL('aa4e68bd-f945-4fc7-9e99-e83da0a2678a'),
   },
 
   // ── FUNDAMENTOS ──
@@ -275,11 +321,12 @@ const HACKER_EXTRA_CERTS: CarouselItem[] = [
     id: 'LFS101',
     title: 'Introduction to Linux — LFS101',
     issuer: 'THE LINUX FOUNDATION',
-    period: 'feb 2026',
+    period: 'oct 2025',
     status: 'Completado',
     description:
       'Fundamentos de Linux, administración básica, uso de la terminal, gestión de archivos y permisos, y conceptos clave para profesionales de ciberseguridad.',
     imageSrc: '/certs/lfs101-linuxfoundation.png',
+    credentialUrl: CREDLY_URL('d6e73d9a-c1c2-4cee-85dc-e0565305fc18'),
   },
 
   // ── FORENSE DIGITAL ──
@@ -317,6 +364,11 @@ const HACKER_CARRERAS = [
 ];
 
 /* ── Sub-components ───────────────────────────────────────── */
+
+// En mobile las herramientas van en fila (la sección quedaba larguísima);
+// desde sm vuelven a ser una lista vertical.
+const TOOL_LIST =
+  'flex flex-wrap gap-x-4 gap-y-1.5 sm:block sm:space-y-1.5';
 
 function SectionHeader({ label, sec }: { label: string; sec: SecKey }) {
   return (
@@ -363,7 +415,7 @@ function SkillCard({ area, tools, sec, delay = 0 }: SkillCardProps) {
         <p className='font-mono text-xs mb-2' style={{ color: SEC[sec].hex }}>
           [{area}]
         </p>
-        <ul className='space-y-1.5'>
+        <ul className={TOOL_LIST}>
           {tools.map((tool) => (
             <li
               key={tool}
@@ -563,7 +615,7 @@ export function HackerSection() {
                   <h3 className='font-mono text-sm font-bold text-text mt-1 mb-3'>
                     {phase.name}
                   </h3>
-                  <ul className='space-y-1.5'>
+                  <ul className={TOOL_LIST}>
                     {phase.tools.map((tool) => (
                       <li
                         key={tool}
@@ -732,6 +784,11 @@ export function HackerSection() {
               ))}
             </div>
           </m.div>
+        </div>
+
+        {/* ── BADGES CREDLY ── */}
+        <div className='container mx-auto max-w-7xl px-6 pb-12'>
+          <CredlyBadges badges={CREDLY_BADGES} profileUrl={CREDLY_PROFILE} />
         </div>
 
         {/* ── OTRAS CERTIFICACIONES ── */}

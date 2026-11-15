@@ -177,6 +177,8 @@
 @media (prefers-reduced-motion: reduce) {
   .glitch::before,
   .glitch::after {
+    /* Sin animación las dos capas quedarían encima del texto: se ocultan. */
+    display: none;
     animation: none;
   }
 }
