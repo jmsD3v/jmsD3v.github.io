@@ -61,6 +61,37 @@ export const metadata: Metadata = {
   },
 };
 
+// Datos estructurados (schema.org): ayudan a buscadores a asociar el sitio con la persona.
+const PERSON_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Juan Manuel Silva',
+  alternateName: 'jmsDev',
+  url: 'https://jmsilva.dev',
+  image: 'https://jmsilva.dev/og-image.png',
+  jobTitle: 'Analista en Ciberseguridad · Full Stack & Python Security Developer',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Las Breñas',
+    addressRegion: 'Chaco',
+    addressCountry: 'AR',
+  },
+  knowsAbout: [
+    'Ciberseguridad',
+    'Pentesting',
+    'Next.js',
+    'TypeScript',
+    'Python',
+    'Industria 4.0',
+    'Ciberseguridad industrial',
+  ],
+  sameAs: [
+    'https://github.com/jmsD3v',
+    'https://www.linkedin.com/in/jmsilva83',
+    'https://www.credly.com/users/juan-manuel-silva.be4a3ff2',
+  ],
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -69,6 +100,10 @@ export default function RootLayout({
   return (
     <html lang='es' suppressHydrationWarning>
       <body>
+        <script
+          type='application/ld+json'
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_JSON_LD) }}
+        />
         <SmoothScrollProvider>
           <AnimationProvider>{children}</AnimationProvider>
         </SmoothScrollProvider>

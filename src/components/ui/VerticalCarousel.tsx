@@ -105,11 +105,22 @@ export function VerticalCarousel({
             <p className='font-mono text-xs text-text-muted mt-0.5'>
               {item.issuer}
             </p>
-            <div className='flex items-center justify-between mt-2'>
+            <div className='flex items-center gap-3 mt-2'>
               {item.period && (
                 <span className='font-mono text-xs text-text-muted'>
                   {item.period}
                 </span>
+              )}
+              {item.credentialUrl && (
+                <a
+                  href={item.credentialUrl}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  aria-label={`Verificar credencial: ${item.title}`}
+                  className='font-mono text-xs text-accent hover:underline'
+                >
+                  Verificar ↗
+                </a>
               )}
               <span
                 className={`font-mono text-xs ml-auto ${

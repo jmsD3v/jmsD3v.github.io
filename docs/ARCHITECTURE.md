@@ -28,3 +28,26 @@ Decisiones de arquitectura del portfolio (ADR). Cada una dice qué se decidió, 
 3. Subir los PDFs a `public/pdf/` y listarlos en `documents`.
 4. Sumar la tarjeta de entrada en la sección que corresponda (Hacker o Dev).
 5. Verificar a 360 px y en escritorio: sin scroll horizontal, tablas y diagramas dentro de su contenedor con `overflow-x-auto`.
+
+## ADR-002 · Credenciales verificables (Credly y POK) como datos estáticos
+
+**Fecha:** 2026-11-15 · **Estado:** aceptada
+
+**Contexto.** Los certificados eran solo capturas: nadie podía comprobarlos. Había además cuatro badges en Credly y el Diplomado en Industria 4.0 (IngeLearn, credencial en POK) figuraba "en proceso" y sin temario.
+
+**Decisión.**
+- Los badges de Credly se cargan a mano en `CREDLY_BADGES` (`HackerSection.tsx`), con la imagen bajada a `public/badges/` (340 px). No se consulta la API de Credly en runtime ni en build: son cuatro badges que cambian un par de veces por año, y así el sitio no depende de un tercero ni necesita permitir otro host de imágenes.
+- `CarouselItem` suma `credentialUrl` (opcional). Si está, las tarjetas de ambos carruseles muestran "Verificar ↗".
+- El diplomado tiene bloque propio (`DiplomaHighlight`) con sus 11 módulos; los tipos nuevos viven en `src/types/credentials.ts`.
+- La lista de "Formación destacada" de la sección Dev sale del mismo arreglo que el carrusel (`DEV_CERTS`): antes eran dos listas iguales mantenidas a mano.
+- Un badge vencido se muestra en gris con su fecha de vencimiento, no se oculta.
+- De paso: `robots.txt`, `sitemap.xml` y datos estructurados `Person` (JSON-LD) en el layout.
+
+**Consecuencias.**
+- Un badge nuevo en Credly no aparece solo: hay que bajar la imagen y sumar la entrada.
+- Las fechas de LFS101 (oct. 2025) e ICIP (sep. 2025) se corrigieron según Credly.
+
+**Cómo sumar un badge.**
+1. Bajar la imagen desde Credly a `public/badges/<nombre>.png` (340 px).
+2. Agregar la entrada al principio de `CREDLY_BADGES` con el id del badge (el de la URL pública).
+3. Si el certificado ya está en un carrusel, sumarle `credentialUrl`.
