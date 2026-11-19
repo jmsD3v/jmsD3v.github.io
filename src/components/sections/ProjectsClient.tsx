@@ -44,6 +44,14 @@ const SEC_GROUPS: {
   },
 ]
 
+/** Mínimo de tarjetas visibles antes de "Ver más" si el filtro tiene pocos destacados. */
+const MIN_VISIBLE = 3
+
+/** Destacados primero (en el orden de FEATURED_REPOS); el resto mantiene su orden. */
+function byFeatured(a: ProjectCardData, b: ProjectCardData) {
+  return (a.featuredRank ?? Infinity) - (b.featuredRank ?? Infinity)
+}
+
 interface ProjectsClientProps {
   projects: ProjectCardData[]
   githubUrl: string
@@ -98,6 +106,12 @@ function CardsGrid({
 
 export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
   const [active, setActive] = useState<ProjectFilter>('all')
+  const [expanded, setExpanded] = useState(false)
+
+  const changeFilter = (next: ProjectFilter) => {
+    setActive(next)
+    setExpanded(false)
+  }
 
   // When filter changes the page layout shifts — refresh GSAP ScrollTrigger
   // so ModeTransition recalculates its scroll positions
@@ -108,11 +122,22 @@ export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
       }
     }, 350) // after AnimatePresence exit/enter finishes
     return () => clearTimeout(timer)
-  }, [active])
+  }, [active, expanded])
 
   const filtered = active === 'all'
     ? projects
     : projects.filter((p) => p.category === active)
+
+  const flat = [...filtered].sort(byFeatured)
+  // Sin expandir se ven los destacados del filtro activo (al menos MIN_VISIBLE).
+  const visibleLimit = Math.max(MIN_VISIBLE, flat.filter((p) => p.featuredRank !== undefined).length)
+  const shown = expanded ? flat : flat.slice(0, visibleLimit)
+  const hiddenCount = flat.length - shown.length
+
+  const collapse = () => {
+    setExpanded(false)
+    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   return (
     <div>
@@ -123,7 +148,7 @@ export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
             key={f.value}
             variant={active === f.value ? 'primary' : 'secondary'}
             size="sm"
-            onClick={() => setActive(f.value)}
+            onClick={() => changeFilter(f.value)}
           >
             {f.label}
             <span className="ml-1.5 opacity-60 text-xs">
@@ -204,7 +229,20 @@ export function ProjectsClient({ projects, githubUrl }: ProjectsClientProps) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <CardsGrid projects={filtered} />
+            <CardsGrid key={expanded ? 'all' : 'top'} projects={shown} />
+
+            {flat.length > visibleLimit && (
+              <div className="mt-6 flex justify-center">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={expanded ? collapse : () => setExpanded(true)}
+                  aria-expanded={expanded}
+                >
+                  {expanded ? 'Ver menos ↑' : `Ver ${hiddenCount} proyectos más ↓`}
+                </Button>
+              </div>
+            )}
           </m.div>
         )}
       </AnimatePresence>

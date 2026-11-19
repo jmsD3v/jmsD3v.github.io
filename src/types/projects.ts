@@ -14,4 +14,8 @@ export interface ProjectCardData {
   category: 'dev' | 'hacker' | 'other'
   secGroup?: SecGroup
   secOrder: number
+  /** Posición en la lista de destacados (0 = primero). Sin destacar: undefined. */
+  featuredRank?: number
+  /** Nombre a mostrar en la tarjeta si difiere del repo (el link sigue al repo). */
+  displayName?: string
 }

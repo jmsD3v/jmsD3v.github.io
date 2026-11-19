@@ -97,7 +97,7 @@ export function ProjectCard({
           )}
           style={selected ? { color: effectiveAccent } : undefined}
         >
-          {project.name}
+          {project.displayName ?? project.name}
         </h3>
         {project.stargazers_count > 0 && (
           <span className="shrink-0 font-mono text-xs text-text-muted">

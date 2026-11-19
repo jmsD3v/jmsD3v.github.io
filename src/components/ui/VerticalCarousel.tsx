@@ -64,8 +64,10 @@ export function VerticalCarousel({
     >
       {/* Card */}
       <div
-        className='relative flex-1 overflow-hidden rounded-md border border-surface bg-surface/20'
-        style={{ height: cardHeight }}
+        // En celular la tarjeta es más baja (el certificado ocupa menos alto);
+        // desde md usa cardHeight.
+        className='relative h-[340px] flex-1 overflow-hidden rounded-md border border-surface bg-surface/20 md:h-[var(--card-h)]'
+        style={{ ['--card-h' as string]: `${cardHeight}px` }}
       >
         <AnimatePresence custom={direction} mode='wait'>
           <m.div
@@ -79,14 +81,28 @@ export function VerticalCarousel({
             className='absolute inset-0 flex flex-col p-3'
           >
             {/* Certificate image */}
-            <div className='relative w-full h-[280px] overflow-hidden rounded border border-surface/60 bg-surface/30 mb-4'>
+            <div className='relative w-full h-[200px] md:h-[280px] overflow-hidden rounded border border-surface/60 bg-surface/30 mb-4'>
               {item.imageSrc ? (
-                <Image
-                  src={item.imageSrc}
-                  alt={item.title}
-                  fill
-                  className='object-contain'
-                />
+                <>
+                  {/* Los certificados vienen en proporciones distintas (1.24 a 2.12).
+                      La misma imagen, ampliada y difuminada, rellena los costados
+                      para que ninguna quede con franjas vacías ni recortada. */}
+                  <Image
+                    src={item.imageSrc}
+                    alt=''
+                    aria-hidden
+                    fill
+                    sizes='(min-width: 768px) 640px, 100vw'
+                    className='scale-110 object-cover opacity-35 blur-xl'
+                  />
+                  <Image
+                    src={item.imageSrc}
+                    alt={item.title}
+                    fill
+                    sizes='(min-width: 768px) 640px, 100vw'
+                    className='object-contain p-3 drop-shadow-[0_6px_18px_rgba(0,0,0,0.55)]'
+                  />
+                </>
               ) : (
                 <div className='absolute inset-0 flex items-center justify-center'>
                   <span className='font-mono text-xs text-text-muted'>

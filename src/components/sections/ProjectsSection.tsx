@@ -20,7 +20,27 @@ const EXCLUDED_REPOS = new Set([
   'curso_node-RED',
   'tron-ares-theme',
   'cyberpyme',
+  'CvMaker', // abandonado, se va a borrar
+  'PyMp3',
+  'hexa-gestion',
 ])
+
+// Los que se ven sin tocar "Ver más", en este orden.
+const FEATURED_REPOS = [
+  'solar-ot-lab-showcase',
+  'ai-agent-security-lab',
+  'reconai',
+  'soclite',
+  'TecnoInstalador',
+  'HEXA-LandingPage',
+  'argos-landing',
+]
+
+// solar-ot-lab es privado (protege el código); su versión pública es el
+// showcase. La tarjeta muestra el nombre del proyecto y enlaza al público.
+const DISPLAY_NAMES: Record<string, string> = {
+  'solar-ot-lab-showcase': 'solar-ot-lab',
+}
 
 export async function ProjectsSection() {
   const username = process.env.GITHUB_USERNAME ?? 'jmsD3v'
@@ -47,6 +67,8 @@ export async function ProjectsSection() {
         category: categorizeRepo(r),
         secGroup: getSecGroup(r),
         secOrder: getSecOrder(r),
+        featuredRank: FEATURED_REPOS.includes(r.name) ? FEATURED_REPOS.indexOf(r.name) : undefined,
+        displayName: DISPLAY_NAMES[r.name],
       }))
       .filter((r) => r.category !== 'other')
       .sort((a, b) => {
