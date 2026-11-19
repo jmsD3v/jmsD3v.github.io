@@ -204,6 +204,15 @@ const CREDLY_BADGES: CredlyBadge[] = [
 
 const HACKER_CERTS: CarouselItem[] = [
   {
+    // Universitario, 315 h en 14 módulos. Fecha: emisión del PDF (26/03/2026).
+    id: 'uma-incibe-mooc',
+    title: 'MOOC en Ciberseguridad (315 h)',
+    issuer: 'Universidad de Málaga / INCIBE',
+    period: 'mar. 2026',
+    status: 'Completado',
+    imageSrc: '/certs/mooc-ciberseguridad-uma-incibe.png',
+  },
+  {
     id: 'google-cyber-v2',
     title: 'Google Cybersecurity Certificate V2',
     issuer: 'Google / Coursera',
@@ -343,6 +352,12 @@ const HACKER_EXTRA_CERTS: CarouselItem[] = [
 ];
 
 const HACKER_CARRERAS = [
+  {
+    title: 'MOOC en Ciberseguridad (315 h)',
+    issuer: 'Universidad de Málaga / INCIBE',
+    period: 'mar. 2026',
+    status: 'Completado',
+  },
   {
     title: 'Google Cybersecurity Certificate',
     issuer: 'Google / Coursera',
